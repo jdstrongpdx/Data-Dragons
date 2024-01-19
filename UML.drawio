@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-01-19T06:19:32.735Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="g9jUrb8QPCO6YxqdG6oq" version="22.1.21" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2024-01-19T06:24:24.995Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="6eCuas2dK6X585RNiMiz" version="22.1.21" type="github" pages="4">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Joel&#39;s Version">
     <mxGraphModel dx="1336" dy="1517" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
@@ -1391,12 +1391,12 @@
         <mxCell id="uh-q171yXLc2m8WZg1uu-14" value="" style="shape=partialRectangle;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" vertex="1" parent="uh-q171yXLc2m8WZg1uu-1">
           <mxGeometry y="150" width="290" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="uh-q171yXLc2m8WZg1uu-15" value="" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;" vertex="1" parent="uh-q171yXLc2m8WZg1uu-14">
+        <mxCell id="uh-q171yXLc2m8WZg1uu-15" value="FK" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;" vertex="1" parent="uh-q171yXLc2m8WZg1uu-14">
           <mxGeometry width="30" height="30" as="geometry">
             <mxRectangle width="30" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="uh-q171yXLc2m8WZg1uu-16" value="neighborhoodID: INT FK" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;" vertex="1" parent="uh-q171yXLc2m8WZg1uu-14">
+        <mxCell id="uh-q171yXLc2m8WZg1uu-16" value="neighborhoodID: INT " style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;" vertex="1" parent="uh-q171yXLc2m8WZg1uu-14">
           <mxGeometry x="30" width="260" height="30" as="geometry">
             <mxRectangle width="260" height="30" as="alternateBounds" />
           </mxGeometry>
