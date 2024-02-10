@@ -211,6 +211,8 @@ h5, h6 {
   /*  ----- Table ----- */
   table {
     border-collapse:collapse;
+    border: 2px solid var(--navy);
+    margin-bottom: 2%;
     width: 100%;
   }
   caption {
@@ -219,7 +221,7 @@ h5, h6 {
     padding:1% 0;
   }
   thead {
-    border: 2px solid var(--color-dark-brown);
+
     color: var(--color-cream);
     background-color:  var(--navy);
   }
@@ -261,17 +263,17 @@ h5, h6 {
     font-family: 'Titillium Web', sans-serif;
   }
   form {
-    font-size: 110%;
+    border: 2px solid var(--navy);
     font-size: 110%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+    padding-bottom: 40px;
+    margin-top: 40px;
   }
   fieldset {
     border: 2px solid var(--color-dark-brown);
-    margin-bottom: 1%;
     width: 60%;
     display: block;
     text-align: center;
@@ -282,12 +284,13 @@ h5, h6 {
     color: var(--color-light-orange);
     border: 2px solid var(--navy);
     padding: 1%;
-    font-size: 110%;
+
   }
   label {
     display: block;
     margin-top: 2%;
-    color: var(--color-dark-brown)
+    color: var(--color-dark-brown);
+    font-size: 120%;
   }
   button {
     font-size: 100%;
@@ -303,7 +306,6 @@ h5, h6 {
     padding: 5px;
     font-size: 110%;
     background-color: var(--color-cream);
-    margin-bottom: 1%;
     width: 50%;
   }
 
