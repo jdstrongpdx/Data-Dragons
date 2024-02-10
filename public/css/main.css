@@ -107,10 +107,10 @@
   /* ----- Anchors ----- Text links */
   a {}
   a:link {
-    color:var(--rust)
+    color: white;
   }
   a:hover {
-    color:var(--rust)
+    color: white;
   }
   a:active {}
   a:visited {}
