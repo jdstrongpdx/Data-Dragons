@@ -32,11 +32,6 @@
   }
 
   body { 
-    background-attachment: fixed;
-    background-image: url("images/seattle-fall-sunset.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     background-color: var(--color-trans-grey-blue);
 
 
@@ -150,6 +145,7 @@
   }
   br {}
   ol, ul, dl {
+    font-size: 2.2em;
     margin: 2%;
   }
   li {}
@@ -160,6 +156,7 @@
     font-family: 'Playfair Display', serif;
     font-size: 3em;
     font-weight: 300;
+    text-align: center;
     margin: 0;
   }
   h2 {
@@ -270,7 +267,6 @@ h5, h6 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
 
   }
   fieldset {
@@ -294,28 +290,42 @@ h5, h6 {
     color: var(--color-dark-brown)
   }
   button {
-    font-size: 130%;
-    margin-bottom: 20px;
-    padding: 1%;
-    background-color: var(--color-light-orange);
-    border-radius: 15px;
+    font-size: 100%;
+    color: var(--navy);
+    margin: 5px;
+    padding-left: 10%;
+    padding-right: 10%;
+    background-color: grey;
+    border-radius: 5px;
   }
 
   input {
-    padding: 1%;
+    padding: 5px;
     font-size: 110%;
     background-color: var(--color-cream);
-    margin-bottom: 2%;
+    margin-bottom: 1%;
+    width: 50%;
   }
+
+  input[type=submit] {
+    font-size: 120%;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 5px;
+    padding-left: 10%;
+    padding-right: 10%;
+    background-color: grey;
+    border-radius: 5px;
+  }
+
   select {}
     optgroup {}
     option {}
 
-  textarea {
+  input[type=textarea] {
     padding: 1%;
     font-size: 110%;
     height: 200px;
-    width: 90%;
     background-color: var(--color-cream);
     align-items: center;
   }
@@ -388,6 +398,16 @@ h5, h6 {
 .local a:hover {
   color: var(--color-light-orange);
   background: var(--trans-navy);
+}
+
+.centered {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  font-family: 'DM Serif Display', serif; 
+  text-align: left;
 }
   
   .floatright {}

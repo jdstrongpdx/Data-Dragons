@@ -1,0 +1,68 @@
+
+<h2>Offers Table</h2>
+<table id="offer-table">
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the phousehold-zipcode renders --}}
+        <tr>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{#each data}}
+        <tr data-value={{this.id}}>
+            <td>{{this.offerId}}</td>
+            <td>{{this.offerGiverId}}</td>
+            <td>{{this.offerItem}}</td>
+            <td>{{this.offerDescription}}</td>
+            <td>{{this.offerQuantity}}</td>
+            <td>{{this.offerCost}}</td>
+            <td>{{this.offerActive}}</td>
+            <td>{{this.offerTime}}</td>
+            <td>{{this.offerTypeId}}</td>
+            <td><button onclick="updateHousehold({{this.id}})">Update</button></td>
+            <td><button onclick="deleteHousehold({{this.id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a record to the table  --}}
+<h2>Add or Edit an Offer</h2>
+<form id="add-person-form">
+    <label for="input-offer-giver-id">Giver Id: </label>
+    <input type="number" name="input-offer-giver-id" id="input-offer-giver-id">
+    
+    <label for="input-offer-item">Item: </label>
+    <input type="text" name="input-offer-item" id="input-offer-item">
+
+    <label for="input-offer-description">Description: </label>
+    <input type="textarea" name="input-offer-description" id="input-offer-description">
+
+    <label for="input-offer-quantity">Quantity: </label>
+    <input type="number" name="input-offer-quantity" id="input-offer-quantity">
+
+    <label for="input-offer-cost">Karma Cost: </label>
+    <input type="number" name="input-offer-cost" id="input-offer-cost">
+
+    <label for="input-offer-active">Active: </label>
+    <input type="number" name="input-offer-active" id="input-offer-active">
+
+    <label for="input-offer-type-id">Type Id: </label>
+    <input type="number" name="input-offer-type-id" id="input-offer-type-id">
+
+    <input type="submit">
+</form>
+
+

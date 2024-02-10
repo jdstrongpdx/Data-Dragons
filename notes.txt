@@ -1,5 +1,6 @@
 
 START AND STOP COMMANDS:
+start single: node app.js
 start cmd: forever start app.js
 stop cmd: forever stop app.js
 
