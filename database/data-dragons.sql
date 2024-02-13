@@ -87,7 +87,6 @@ INSERT INTO People (personName, personEmail, personPhoneNumber, personHouseholdI
 ('Emma Davis', 'emma.davis@example.com', '666-555-1098', (SELECT householdId FROM Households WHERE householdAddress = '101 Oakridge Drive' AND householdCity = 'Lexington' AND householdState = 'Kentucky' AND householdZipcode = '40502')),
 ('Lucas Johnson', 'lucas.johnson@example.com', '666-555-3210', (SELECT householdId FROM Households WHERE householdAddress = '456 Willow Avenue' AND householdCity = 'Oakdale' AND householdState = 'California' AND householdZipcode = '95361')),
 ('Chloe Smith', 'chloe.smith@example.com', '666-555-4321', (SELECT householdId FROM Households WHERE householdAddress = '123 Maple Street' AND householdCity = 'Oakdale' AND householdState = 'California' AND householdZipcode = '95361'));
-;
 
 -- -----------------------------------------------------
 -- Table `OfferTypes`
