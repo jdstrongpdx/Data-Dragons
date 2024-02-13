@@ -1,5 +1,4 @@
-
--- Note, an asterisk designates that the following variable is user-provided through the web interfacfe
+-- Note: an asterisk designates that the following variable is user-provided through the web interface\
 
 
 -- Select Operations
