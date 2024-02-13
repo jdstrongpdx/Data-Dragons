@@ -9,8 +9,8 @@ SELECT householdId, householdAddress FROM Households;
 -- Get table of neighborhood names and IDs for a dropdown
 SELECT neighborhoodId, neighborhoodName FROM Neighborhoods;
 
--- Get table of people names and IDs for a dropdown
-SELECT personID, personName FROM People;
+-- Get table of people user names (email) and IDs for a dropdown
+SELECT personEmail, personName FROM People;
 
 -- Get table of offer types and IDs for a dropdown
 SELECT offerTypeId, offerType FROM OfferTypes;
@@ -23,7 +23,7 @@ SELECT offerID, offerItem FROM Offers;
 
 INSERT INTO Neighborhoods (neighborhoodName)
 VALUES (
-    *name);
+    '*name');
 
 INSERT INTO Households (householdAddress, householdCity, householdState, householdZipCode, householdNeighborhoodId)
 VALUES (
@@ -35,20 +35,20 @@ VALUES (
 
 INSERT INTO People (personName, personEmail, personPhoneNumber, personHouseholdId)
 VALUES (
-    *name, 
-    *email, 
-    *phone,
+    '*name', 
+    '*email', 
+    '*phone',
     (SELECT householdId FROM Households WHERE householdAddress = '*address' AND householdCity = '*city' AND householdState = '*state' AND householdZipcode = '*zip'));
 
 INSERT INTO OfferTypes (offerType)
 VALUES (
-    *type);
+    '*type');
 
 INSERT INTO Offers (offerGiverId, offerItem, offerDescription, offerQuantity, offerCost, offerTypeId)
 VALUES (
-    (SELECT personId FROM People WHERE personName = '*giverName'), 
-    *item, 
-    *description, 
+    (SELECT personId FROM People WHERE personEmail = '*giverUserName'), 
+    '*item', 
+    '*description', 
     *quantity, 
     *cost, 
     (SELECT offerTypeId FROM OfferTypes WHERE offerType = '*offerTypeName'));
@@ -56,7 +56,7 @@ VALUES (
 INSERT INTO Transactions (transactionOfferID, transactionRecieverID) VALUES
 VALUES (
     (SELECT offerID FROM Offers WHERE offerItem = '*item'), 
-    (SELECT personId FROM People WHERE personName = '*receiverName'));
+    (SELECT personId FROM People WHERE personEmail = '*recieverUserName'));
 
 
 -- Update Operations
@@ -64,17 +64,17 @@ VALUES (
 -- Update an individuals email, phone, or address if one is provided, otherwise maintain the current one
 UPDATE People
 SET 
-    personEmail = IsNull(*newEmail, (SELECT personEmail FROM People WHERE personName = '*updateName')),
-    personPhoneNumber = IsNull(*newEmail, (SELECT personPhoneNumber FROM People WHERE personName = '*updateName')),
-    personHouseholdId = IsNull(*newEmail, (SELECT personHouseholdId FROM People WHERE personName = '*updateName'))
+    personEmail = IsNull(*newEmail, '*updateUserName'),
+    personPhoneNumber = IsNull(*newNumber, (SELECT personPhoneNumber FROM People WHERE personEmail = '*updateUserName')),
+    personHouseholdId = IsNull(*newHousehold, (SELECT personHouseholdId FROM People WHERE personEmail = '*updateUserName'))
 WHERE
-    personID = (SELECT personId FROM People WHERE personName = '*updateName');
+    personID = (SELECT personId FROM People WHERE personEmail = '*updateUserName');
 
 -- Update a transaction
 UPDATE Transactions
 SET
     transactionOfferID = (SELECT offerID FROM Offers WHERE offerItem = '*newItem'),
-    transactionRecieverID = (SELECT personId FROM People WHERE personName = '*receiverName')
+    transactionRecieverID = (SELECT personId FROM People WHERE personEmail = '*recieverUserName')
 WHERE
     transactionId = *id;
 
@@ -85,9 +85,9 @@ WHERE
 DELETE FROM Transactions WHERE transactionOfferID = (SELECT offerID FROM Offers WHERE offerItem = '*itemVoided');
 
 -- Delete all transactions involving a particular buyer
-DELETE FROM Transactions WHERE transactionRecieverID = (SELECT personId FROM People WHERE personName = '*personVoided');
+DELETE FROM Transactions WHERE transactionRecieverID = (SELECT personId FROM People WHERE personEmail = '*personUserNameVoided');
 
 -- Delete a particular transaction
 DELETE FROM Transactions WHERE 
 transactionOfferID = (SELECT offerID FROM Offers WHERE offerItem = '*itemVoided')
-AND transactionRecieverID = (SELECT personId FROM People WHERE personName = '*personVoided');
+AND transactionRecieverID = (SELECT personId FROM People WHERE personEmail = '*personUserNameVoided');
