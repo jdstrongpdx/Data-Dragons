@@ -18,6 +18,16 @@ SELECT offerTypeId, offerType FROM OfferTypes;
 -- Get table of offers and IDs for a dropdown
 SELECT offerID, offerItem FROM Offers;
 
+-- Get table of people with their address and neighborhood
+SELECT personName, personEmail, householdAddress, householdCity, householdState, householdZipCode, neighborhoodName FROM People
+INNER JOIN Households ON personHouseholdID = householdID
+INNER JOIN Neighborhoods ON householdNeighborhoodId = neighborhoodID;
+
+-- Get table of transaction items, giver, and receiever
+SELECT offerItem as Item, g.personName as Giver, r.personName as Reciever FROM Transactions
+INNER JOIN Offers ON transactionOfferID = offerID
+INNER JOIN People AS g ON g.personId = offerGiverID
+INNER JOIN People AS r ON r.personID = transactionRecieverId;
 
 -- Create Operations
 
