@@ -58,7 +58,7 @@ DROP TABLE IF EXISTS `People` ;
 CREATE TABLE IF NOT EXISTS `People` (
   `personId` INT NOT NULL AUTO_INCREMENT,
   `personName` VARCHAR(75) NOT NULL,
-  `personEmail` VARCHAR(75) NOT NULL,
+  `personEmail` VARCHAR(75) NOT NULL UNIQUE,
   `personPhoneNumber` VARCHAR(45) NOT NULL,
   `personActive` TINYINT(1) NOT NULL DEFAULT 1,
   `personHouseholdId` INT NULL,
