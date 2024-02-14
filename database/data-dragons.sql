@@ -58,7 +58,7 @@ DROP TABLE IF EXISTS `People` ;
 CREATE TABLE IF NOT EXISTS `People` (
   `personId` INT NOT NULL AUTO_INCREMENT,
   `personName` VARCHAR(75) NOT NULL,
-  `personEmail` VARCHAR(75) NOT NULL,
+  `personEmail` VARCHAR(75) NOT NULL UNIQUE,
   `personPhoneNumber` VARCHAR(45) NOT NULL,
   `personActive` TINYINT(1) NOT NULL DEFAULT 1,
   `personHouseholdId` INT NULL,
@@ -87,7 +87,6 @@ INSERT INTO People (personName, personEmail, personPhoneNumber, personHouseholdI
 ('Emma Davis', 'emma.davis@example.com', '666-555-1098', (SELECT householdId FROM Households WHERE householdAddress = '101 Oakridge Drive' AND householdCity = 'Lexington' AND householdState = 'Kentucky' AND householdZipcode = '40502')),
 ('Lucas Johnson', 'lucas.johnson@example.com', '666-555-3210', (SELECT householdId FROM Households WHERE householdAddress = '456 Willow Avenue' AND householdCity = 'Oakdale' AND householdState = 'California' AND householdZipcode = '95361')),
 ('Chloe Smith', 'chloe.smith@example.com', '666-555-4321', (SELECT householdId FROM Households WHERE householdAddress = '123 Maple Street' AND householdCity = 'Oakdale' AND householdState = 'California' AND householdZipcode = '95361'));
-;
 
 -- -----------------------------------------------------
 -- Table `OfferTypes`
@@ -133,13 +132,13 @@ CREATE TABLE IF NOT EXISTS `Offers` (
   
 
 INSERT INTO Offers (offerGiverId, offerItem, offerDescription, offerQuantity, offerCost, offerTypeId) VALUES
-((SELECT personId FROM People WHERE personName = 'John Smith'), '10mm Socket Head', 'Borrow my 10mm Socket Head - Just don''t lose it', 
+((SELECT personId FROM People WHERE personEmail = 'john.smith@example.com'), '10mm Socket Head', 'Borrow my 10mm Socket Head - Just don''t lose it', 
 1, 10, (SELECT offerTypeId FROM OfferTypes WHERE offerType = 'Goods - Tools')),
 
-((SELECT personId FROM People WHERE personName = 'Mia Taylor'), 'Dog Walking', '30 minute mid-day walk for up to two well behaved dogs', 
+((SELECT personId FROM People WHERE personEmail = 'mia.taylor@example.com'), 'Dog Walking', '30 minute mid-day walk for up to two well behaved dogs', 
 4, 30, (SELECT offerTypeId FROM OfferTypes WHERE offerType = 'Service - Pet Care')),
 
-((SELECT personId FROM People WHERE personName = 'Emma Davis'), 'Yoga Equipment', 'Yoga equipment including blocks, bands, balls, and mat.', 
+((SELECT personId FROM People WHERE personEmail = 'emma.davis@example.com'), 'Yoga Equipment', 'Yoga equipment including blocks, bands, balls, and mat.', 
 2, 25, (SELECT offerTypeId FROM OfferTypes WHERE offerType = 'Goods - Fitness Equipment'));
 
 -- -----------------------------------------------------
@@ -158,9 +157,9 @@ CREATE TABLE IF NOT EXISTS `Transactions` (
   );
 
 INSERT INTO Transactions (transactionOfferID, transactionRecieverID) VALUES
-(1, (SELECT personId FROM People WHERE personName = 'Michael Brown')),
-(2, (SELECT personId FROM People WHERE personName = 'Ava Anderson')),
-(3, (SELECT personId FROM People WHERE personName = 'Grace Wilson'));
+(1, (SELECT personId FROM People WHERE personEmail = 'michael.brown@example.com')),
+(2, (SELECT personId FROM People WHERE personEmail = 'ava.anderson@example.com')),
+(3, (SELECT personId FROM People WHERE personEmail = 'grace.wilson@example.com'));
 
 
 SET FOREIGN_KEY_CHECKS=1;
