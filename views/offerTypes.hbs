@@ -25,11 +25,12 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 </table>
 
 <h2>Add an Offer Type</h2>
-<form id="add-person-form">
+<form id="add-offer-type-form-ajax">
     <label for="input-offer-type">Offer Type: </label>
-    <input type="text" name="input-household-address" id="input-household-address">
+    <input type="text" name="input-offer-type" id="input-offer-type">
 
     <input type="submit">
 </form>
 
-
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_offer_type.js"></script>

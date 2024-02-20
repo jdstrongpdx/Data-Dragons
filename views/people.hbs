@@ -53,15 +53,15 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
     <input type="text" name="input-phone-number" id="input-phone-number">
 
     <label for="input-household-id">Household Id: </label>
-
-    {{!-- <input type="number" name="input-household-id" id="input-household-id"> --}}
-    <select name="input-household-id" id="input-household-id">
-        <option value="">Select a Household</option>
-        {{#each households}}
-        <option value="{{this.householdId}}"> {{this.householdAddress}}</option>
-        {{/each}}
-        <option value=""></option>
-    </select>
+    <div class="selection">
+        <select name="input-household-id" id="input-household-id">
+            <option value="">Select a Household</option>
+                {{#each households}}
+                <option value="{{this.householdId}}"> {{this.householdAddress}}</option>
+                {{/each}}
+            <option value=""></option>
+        </select>
+    </div>
 
         <label for="input-karma">Karma (Read Only): </label>
     <input type="number" name="input-karma" id="input-karma" readonly="readonly">

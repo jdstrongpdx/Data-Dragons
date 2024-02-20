@@ -36,7 +36,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
             <td>{{this.offerCost}}</td>
             <td>{{this.offerTime}}</td>
             <td>{{this.offerTypeId}}</td>
-            <td><button onclick="updateHousehold({{this.id}})">Update</button></td>
+            <td><button onclick="updateOffer({{this.id}})">Update</button></td>
         </tr>
         {{/each}}
     </tbody>
@@ -44,29 +44,43 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 
 {{!-- Form to add a record to the table  --}}
 <h2>Add an Offer</h2>
-<form id="add-person-form">
-    <label for="input-offer-giver-id">Giver Id: </label>
-    <input type="number" name="input-offer-giver-id" id="input-offer-giver-id">
+<form id="add-offer-form-ajax">
+
+    <label for="input-giver-id">Giver Id: </label>
+    <div class="selection">
+        <select name="input-giver-id" id="input-giver-id">
+            <option value="">Select a Giver Name</option>
+            {{#each people}}
+            <option value="{{this.personId}}"> {{this.personName}}</option>
+            {{/each}}
+        </select>
+    </div>
     
-    <label for="input-offer-item">Item: </label>
-    <input type="text" name="input-offer-item" id="input-offer-item">
+    <label for="input-item">Item: </label>
+    <input type="text" name="input-item" id="input-item">
 
-    <label for="input-offer-description">Description: </label>
-    <input type="textarea" name="input-offer-description" id="input-offer-description">
+    <label for="input-description">Description: </label>
+    <input type="textarea" name="input-description" id="input-description">
 
-    <label for="input-offer-quantity">Quantity: </label>
-    <input type="number" name="input-offer-quantity" id="input-offer-quantity">
+    <label for="input-quantity">Quantity: </label>
+    <input type="number" name="input-quantity" id="input-quantity">
 
-    <label for="input-offer-cost">Karma Cost: </label>
-    <input type="number" name="input-offer-cost" id="input-offer-cost">
+    <label for="input-cost">Karma Cost: </label>
+    <input type="number" name="input-cost" id="input-cost">
 
-    <label for="input-offer-active">Active: </label>
-    <input type="number" name="input-offer-active" id="input-offer-active">
+    <label for="input-type-id">Type Id: </label>
+    <div class="selection">
+        <select name="input-type-id" id="input-type-id">
+            <option value="">Select a Offer Type</option>
+                {{#each offerTypes}}
+                <option value="{{this.offerTypeId}}"> {{this.offerType}}</option>
+                {{/each}}
+        </select>
+    </div>
 
-    <label for="input-offer-type-id">Type Id: </label>
-    <input type="number" name="input-offer-type-id" id="input-offer-type-id">
 
     <input type="submit">
 </form>
 
-
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_offer.js"></script>

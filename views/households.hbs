@@ -36,7 +36,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 
 {{!-- Form to add a record to the table  --}}
 <h2>Add a Household</h2>
-<form id="add-household-form">
+<form id="add-household-form-ajax">
     <label for="input-address">Address: </label>
     <input type="text" name="input-address" id="input-address">
     
@@ -49,10 +49,22 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
     <label for="input-zipcode">Zip Code: </label>
     <input type="text" name="input-zipcode" id="input-zipcode">
 
+
     <label for="input-neighborhood-id">Neighborhood Id: </label>
-    <input type="number" name="input-neighborhood-id" id="input-neighborhood-id">
+    <div class="selection">
+        <select name="input-neighborhood-id" id="input-neighborhood-id">
+            <option value="">Select a Neighborhood</option>
+            {{#each neighborhoods}}
+            <option value="{{this.neighborhoodId}}"> {{this.neighborhoodName}}</option>
+            {{/each}}
+        </select>
+    </div>
 
     <input type="submit">
 </form>
+
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_household.js"></script>
 
 

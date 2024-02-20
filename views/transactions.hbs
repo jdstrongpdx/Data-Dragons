@@ -25,22 +25,40 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
             <td>{{this.transactionOfferId}}</td>
             <td>{{this.transactionReceiverId}}</td>
             <td>{{this.transactionTime}}</td>
-            <td><button onclick="deleteTransaction({{this.id}})">Delete</button></td>
+            <td><button onclick="deleteTransaction({{this.transactionId}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+<script src="./js/delete_transaction.js"></script>
 
 {{!-- Form to add a record to the table  --}}
 <h2>Add a Transaction</h2>
-<form id="add-person-form">
-    <label for="input-transaction-offer-id">Offer Id: </label>
-    <input type="number" name="input-transaction-offer-id" id="input-transaction-offer-id">
-    
-    <label for="input-reciever-id">Reciever Id: </label>
-    <input type="number" name="input-reciever-id" id="input-reciever-id">
+<form id="add-transaction-form-ajax">
+
+    <label for="input-transaction-offer-id">Offer Item Name: </label>
+    <div class="selection">
+        <select name="input-transaction-offer-id" id="input-transaction-offer-id">
+            <option value="">Select a Offer</option>
+            {{#each offers}}
+            <option value="{{this.offerId}}"> {{this.offerItem}}</option>
+            {{/each}}
+        </select>
+    </div>
+
+    <label for="input-reciever-id">Reciever Name: </label>
+    <div class="selection">
+        <select name="input-reciever-id" id="input-reciever-id">
+            <option value="">Select a Reciever Name</option>
+            {{#each people}}
+            <option value="{{this.personId}}"> {{this.personName}}</option>
+            {{/each}}
+        </select>
+    </div>
 
     <input type="submit">
 </form>
 
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_transaction.js"></script>
 

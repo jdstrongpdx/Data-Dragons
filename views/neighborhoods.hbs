@@ -28,14 +28,12 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 
 {{!-- Form to add a record to the table  --}}
 <h2>Add a Neighborhood</h2>
-<form id="add-person-form">
-    <label for="input-neighborhood-name">Name: </label>
-    <input type="text" name="input-neighborhood-name" id="input-neighborhood-name">
-
-    <label for="input-neighborhood-active">Active: </label>
-    <input type="number" name="input-neighborhood-active" id="input-neighborhood-name">
+<form id="add-neighborhood-form-ajax">
+    <label for="input-name">Name: </label>
+    <input type="text" name="input-name" id="input-name">
 
     <input type="submit">
 </form>
 
-
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_neighborhood.js"></script>

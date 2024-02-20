@@ -39,15 +39,15 @@ addPersonForm.addEventListener("submit", function (e) {
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+            // Add the new data to the table
+            addRowToTable(xhttp.response);
+
             // Clear the input fields for another transaction
             inputName.value = '';
             inputEmail.value = '';
             inputPhoneNumber.value = '';
             inputHouseholdId.value = '';
-
-            // Add the new data to the table
-            addRowToTable(xhttp.response);
-
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {

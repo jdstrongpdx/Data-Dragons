@@ -38,6 +38,8 @@ app.get('/people', function(req, res)
     {  
 
     // If there is no query string, we just perform a basic SELECT
+    let query1 = "";
+
     if (req.query.qname === undefined)
     {
         query1 = "SELECT * FROM People;";
@@ -55,13 +57,11 @@ app.get('/people', function(req, res)
     // Run the 1st query
     db.pool.query(query1, function(error, rows, fields){
         
-        // Save the people
         let people = rows;
         
         // Run the second query
         db.pool.query(query2, (error, rows, fields) => {
             
-            // Save the planets
             let households = rows;
             return res.render('people', {data: people, households: households});
         })
@@ -71,8 +71,21 @@ app.get('/people', function(req, res)
 app.get('/households', function(req, res)
 {  
     let query1 = "SELECT * FROM Households;";
+
+    // Query 2 is the same in both cases
+    let query2 = "SELECT * FROM Neighborhoods;";
+
+    // Run the 1st query
     db.pool.query(query1, function(error, rows, fields){
-    res.render('households', {data: rows});
+        
+        let households = rows;
+        
+        // Run the second query
+        db.pool.query(query2, (error, rows, fields) => {
+            
+            let neighborhoods = rows;
+            return res.render('households', {data: households, neighborhoods: neighborhoods});
+        })
     })
 });
 
@@ -87,9 +100,27 @@ app.get('/neighborhoods', function(req, res)
 app.get('/offers', function(req, res)
 {  
     let query1 = "SELECT * FROM Offers;";
+
+    // Query 2 is the same in both cases
+    let query2 = "SELECT * FROM OfferTypes;";
+
+    let query3 = "SELECT * FROM People;";
+
+    // Run the 1st query
     db.pool.query(query1, function(error, rows, fields){
-    res.render('offers', {data: rows});
+        let offers = rows;
+        
+        // Run the second query
+        db.pool.query(query2, (error, rows, fields) => {
+            let offerTypes = rows;
+
+            db.pool.query(query3, (error, rows, fields) => {
+                let people = rows;
+                
+                return res.render('offers', {data: offers, offerTypes: offerTypes, people, people});
+        })
     })
+})
 });
 
 app.get('/offerTypes', function(req, res)
@@ -103,62 +134,226 @@ app.get('/offerTypes', function(req, res)
 app.get('/transactions', function(req, res)
 {  
     let query1 = "SELECT * FROM Transactions;";
+
+    // Query 2 is the same in both cases
+    let query2 = "SELECT * FROM Offers;";
+
+    let query3 = "SELECT * FROM People;";
+
+    // Run the 1st query
     db.pool.query(query1, function(error, rows, fields){
-    res.render('transactions', {data: rows});
+        let transactions = rows;
+        
+        // Run the second query
+        db.pool.query(query2, (error, rows, fields) => {
+            let offers = rows;
+
+            db.pool.query(query3, (error, rows, fields) => {
+                let people = rows;
+                
+                return res.render('transactions', {data: transactions, offers: offers, people, people});
+        })
     })
+})
 });
 
     /*
     ROUTES -- POST
 */
 
-    app.post('/add-person-ajax', function(req, res) 
-    {
-        // Capture the incoming data and parse it back to a JS object
-        let data = req.body;
+app.post('/add-person-ajax', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
 
-    
-        // Capture NULL values
-        let householdId = data.householdId;
-        if (isNaN(householdId))
-        {
-            householdId = 'NULL'
+
+    // Capture NULL values
+    let householdId = data.householdId;
+    if (isNaN(householdId))
+    {
+        householdId = 'NULL'
+    }
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO People (personName, personEmail, personPhoneNumber, personHouseholdId) VALUES ('${data.name}', '${data.email}', '${data.phoneNumber}', '${data.householdId}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
         }
-    
-        // Create the query and run it on the database
-        query1 = `INSERT INTO People (personName, personEmail, personPhoneNumber, personHouseholdId) VALUES ('${data.name}', '${data.email}', '${data.phoneNumber}', '${data.householdId}')`;
-        db.pool.query(query1, function(error, rows, fields){
-    
-            // Check to see if there was an error
-            if (error) {
-    
-                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                console.log(error)
-                res.sendStatus(400);
-            }
-            else
-            {
-                // If there was no error, perform a SELECT * on People
-                query2 = `SELECT * FROM People;`;
-                db.pool.query(query2, function(error, rows, fields){
-    
-                    // If there was an error on the second query, send a 400
-                    if (error) {
-                        
-                        // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                        console.log(error);
-                        res.sendStatus(400);
-                    }
-                    // If all went well, send the results of the query back.
-                    else
-                    {
-                        app.get('/people');
-                        //res.send(rows);
-                    }
-                })
-            }
-        })
-    });
+        else
+        {
+            // If there was no error, perform a SELECT * on People
+            query2 = `SELECT * FROM People;`;
+            db.pool.query(query2, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    app.get('/people');
+                    //res.send(rows);
+                }
+            })
+        }
+    })
+});
+
+app.post('/add-household-ajax', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+    let householdId = data.householdId;
+    if (isNaN(householdId))
+    {
+        householdId = 'NULL'
+    }
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Households (householdAddress, householdCity, householdState, householdZipcode, householdNeighborhoodId) VALUES ('${data.address}', '${data.city}', '${data.state}', '${data.zipCode}', '${data.neighborhoodId}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+                res.redirect("/households");
+        }
+    })
+});
+
+app.post('/add-neighborhood-ajax', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Neighborhoods (neighborhoodName) VALUES ('${data.name}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+                res.redirect("/neighborhoods");
+        }
+    })
+});
+
+app.post('/add-offer-ajax', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Offers (offerGiverId, offerItem, offerDescription, offerQuantity, offerCost, offerTypeId) VALUES ('${data.giverId}', '${data.item}', '${data.description}', '${data.quantity}', '${data.cost}', '${data.typeId}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+                res.redirect("/offers");
+        }
+    })
+});
+
+app.post('/add-offer-type-ajax', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO OfferTypes (offerType) VALUES ('${data.offerType}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+                res.redirect("/offerTypes");
+        }
+    })
+});
+
+app.post('/add-transaction-ajax', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+    let offerId = data.offerId;
+    let recieverId = data.recieverId;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Transactions (transactionOfferID, transactionReceiverID) VALUES ('${data.offerId}', '${data.recieverId}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else
+        {
+                res.redirect("/transactions");
+        }
+    })
+});
+
+app.delete('/delete-transaction-ajax/', function(req,res,next){
+    let data = req.body;
+    let transactionId = parseInt(data.id);
+    let deleteTransaction = `DELETE FROM Transactions WHERE transactionId = ?`;
+    // Run the 1st query
+    db.pool.query(deleteTransaction, [transactionId], function(error, rows, fields){
+        if (error) {
+
+        // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+        console.log(error);
+        res.sendStatus(400);
+        }
+
+        else
+        {
+        res.redirect("/transactions");
+        }
+  })
+});
 
 /*
     LISTENER
