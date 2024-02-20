@@ -1,18 +1,20 @@
-
+<!-- 
+Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
+at https://github.com/osu-cs340-ecampus/nodejs-starter-app
+-->
 
 <h2>Household Table</h2>
-<table id="household-table">
+<table id="table">
     {{!-- Header section --}}
     <thead>
 
         <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
-            <th>Update</th>
-            <th>Delete</th>
+            <th>Household Id</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+            <th>Neighborhood Id</th>
         </tr>
     </thead>
 
@@ -26,35 +28,29 @@
             <td>{{this.householdCity}}</td>
             <td>{{this.householdState}}</td>
             <td>{{this.householdZipcode}}</td>
-            <td>{{this.householdActive}}</td>
             <td>{{this.householdNeighborhoodId}}</td>
-            <td><button onclick="updateHousehold({{this.id}})">Update</button></td>
-            <td><button onclick="deleteHousehold({{this.id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
 
 {{!-- Form to add a record to the table  --}}
-<h2>Add or Edit a Household</h2>
-<form id="add-person-form">
-    <label for="input-household-address">Address: </label>
-    <input type="text" name="input-household-address" id="input-household-address">
+<h2>Add a Household</h2>
+<form id="add-household-form">
+    <label for="input-address">Address: </label>
+    <input type="text" name="input-address" id="input-address">
     
-    <label for="input-household-city">City: </label>
-    <input type="text" name="input-household-city" id="input-household-city">
+    <label for="input-city">City: </label>
+    <input type="text" name="input-city" id="input-city">
 
-    <label for="input-household-state">State: </label>
-    <input type="text" name="input-household-state" id="input-household-state">
+    <label for="input-state">State: </label>
+    <input type="text" name="input-state" id="input-state">
 
-    <label for="input-household-zipcode">Zip Code: </label>
-    <input type="text" name="input-household-zipcode" id="input-household-zipcode">
+    <label for="input-zipcode">Zip Code: </label>
+    <input type="text" name="input-zipcode" id="input-zipcode">
 
-    <label for="input-household-active">Active: </label>
-    <input type="number" name="input-household-Active" id="input-household-Active">
-
-    <label for="input-household-neighborhood-id">Neighborhood Id: </label>
-    <input type="number" name="input-household-neighborhood-id" id="input-household-neighborhood-id">
+    <label for="input-neighborhood-id">Neighborhood Id: </label>
+    <input type="number" name="input-neighborhood-id" id="input-neighborhood-id">
 
     <input type="submit">
 </form>

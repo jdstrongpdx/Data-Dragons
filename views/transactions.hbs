@@ -1,15 +1,17 @@
+<!-- 
+Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
+at https://github.com/osu-cs340-ecampus/nodejs-starter-app
+-->
 
 <h2>Transactions Table</h2>
 <table id="transactions-table">
     {{!-- Header section --}}
     <thead>
         <tr>
-            {{#each data.[0]}}
-            <th>
-                {{@key}}
-            </th>
-            {{/each}}
-            <th>Update</th>
+            <th>Transaction Id</th>
+            <th>Offer Id</th>
+            <th>Receiver Id</th>
+            <th>Timestamp</th>
             <th>Delete</th>
         </tr>
     </thead>
@@ -21,17 +23,16 @@
         <tr data-value={{this.id}}>
             <td>{{this.transactionId}}</td>
             <td>{{this.transactionOfferId}}</td>
-            <td>{{this.transactionRecieverId}}</td>
+            <td>{{this.transactionReceiverId}}</td>
             <td>{{this.transactionTime}}</td>
-            <td><button onclick="updateHousehold({{this.id}})">Update</button></td>
-            <td><button onclick="deleteHousehold({{this.id}})">Delete</button></td>
+            <td><button onclick="deleteTransaction({{this.id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
 
 {{!-- Form to add a record to the table  --}}
-<h2>Add or Edit a Transaction</h2>
+<h2>Add a Transaction</h2>
 <form id="add-person-form">
     <label for="input-transaction-offer-id">Offer Id: </label>
     <input type="number" name="input-transaction-offer-id" id="input-transaction-offer-id">

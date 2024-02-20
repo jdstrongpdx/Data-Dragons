@@ -13,7 +13,6 @@ DROP TABLE IF EXISTS `Neighborhoods` ;
 CREATE TABLE IF NOT EXISTS `Neighborhoods` (
   `neighborhoodId` INT NOT NULL AUTO_INCREMENT,
   `neighborhoodName` VARCHAR(75) NOT NULL,
-  `neighborhoodActive` TINYINT(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`neighborhoodId`)
 );
 
@@ -33,7 +32,6 @@ CREATE TABLE IF NOT EXISTS `Households` (
   `householdCity` VARCHAR(75) NOT NULL, 
   `householdState` VARCHAR (50) NOT NULL,
   `householdZipcode` VARCHAR (15) NOT NULL,
-  `householdActive` TINYINT(1) NOT NULL DEFAULT 1,
   `householdNeighborhoodId` INT NOT NULL,
   PRIMARY KEY (`householdId`),
   FOREIGN KEY (`householdNeighborhoodId`) REFERENCES `Neighborhoods` (`neighborhoodId`)
@@ -60,7 +58,6 @@ CREATE TABLE IF NOT EXISTS `People` (
   `personName` VARCHAR(75) NOT NULL,
   `personEmail` VARCHAR(75) NOT NULL UNIQUE,
   `personPhoneNumber` VARCHAR(45) NOT NULL,
-  `personActive` TINYINT(1) NOT NULL DEFAULT 1,
   `personHouseholdId` INT NULL,
   `personKarma` INT NOT NULL DEFAULT 100,
   PRIMARY KEY (`personId`),
@@ -122,7 +119,6 @@ CREATE TABLE IF NOT EXISTS `Offers` (
   `offerDescription` VARCHAR(500) NULL,
   `offerQuantity` INT NOT NULL DEFAULT 1,
   `offerCost` INT NOT NULL,
-  `offerActive` TINYINT(1) NOT NULL DEFAULT 1,
   `offerTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `offerTypeId` INT NOT NULL,
   PRIMARY KEY (`offerId`),
@@ -149,14 +145,14 @@ DROP TABLE IF EXISTS `Transactions` ;
 CREATE TABLE IF NOT EXISTS `Transactions` (
   `transactionId` INT NOT NULL AUTO_INCREMENT,
   `transactionOfferId` INT NOT NULL,
-  `transactionRecieverId` INT NOT NULL,
+  `transactionReceiverId` INT NOT NULL,
   `transactionTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`transactionID`),
   FOREIGN KEY (`transactionOfferID`) REFERENCES `Offers` (`offerId`),
-  FOREIGN KEY (`transactionRecieverID`) REFERENCES `People` (`personId`)
+  FOREIGN KEY (`transactionReceiverID`) REFERENCES `People` (`personId`)
   );
 
-INSERT INTO Transactions (transactionOfferID, transactionRecieverID) VALUES
+INSERT INTO Transactions (transactionOfferID, transactionReceiverID) VALUES
 (1, (SELECT personId FROM People WHERE personEmail = 'michael.brown@example.com')),
 (2, (SELECT personId FROM People WHERE personEmail = 'ava.anderson@example.com')),
 (3, (SELECT personId FROM People WHERE personEmail = 'grace.wilson@example.com'));
