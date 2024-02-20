@@ -432,6 +432,14 @@ select {
   font-family: 'DM Serif Display', serif; 
   text-align: left;
 }
+
+.warning {
+  color: red;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
   
   .floatright {}
   .floatleft {}

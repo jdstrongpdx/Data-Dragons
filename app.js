@@ -57,17 +57,16 @@ app.get('/people', function(req, res)
 
     // Run the 1st query
     db.pool.query(query1, function(error, rows, fields){
-        
         let people = rows;
         
         // Run the second query
         db.pool.query(query2, (error, rows, fields) => {
-            
             let households = rows;
-            return res.render('people', {data: people, households: households});
+
+            return res.render('people', {data: people, households: household});
         })
     })
-    });
+});
 
 app.get('/households', function(req, res)
 {  
@@ -336,12 +335,12 @@ app.post('/add-transaction-ajax', function(req, res)
     })
 });
 
-app.delete('/delete-transaction-ajax/', function(req,res,next){
+app.delete('/delete-offer-ajax/', function(req,res,next){
     let data = req.body;
-    let transactionId = parseInt(data.id);
-    let deleteTransaction = `DELETE FROM Transactions WHERE transactionId = ?`;
+    let offerId = parseInt(data.id);
+    let deleteOffer = `DELETE FROM Offers WHERE offerId = ?`;
     // Run the 1st query
-    db.pool.query(deleteTransaction, [transactionId], function(error, rows, fields){
+    db.pool.query(deleteOffer, [offerId], function(error, rows, fields){
         if (error) {
 
         // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
@@ -351,7 +350,7 @@ app.delete('/delete-transaction-ajax/', function(req,res,next){
 
         else
         {
-        res.redirect("/transactions");
+        res.redirect("/offers");
         }
   })
 });

@@ -2,6 +2,9 @@
 Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
 at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 -->
+<div class="warning">
+    <p>Notice: Update buttons are not currently working.  User must reload page after adding a record.</p>
+</div>
 
 <table id="offer-table">
     <h2>Offers Table</h2>
@@ -19,7 +22,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
             <th>Cost</th>
             <th>Timestamp</th>
             <th>Offer Type</th>
-            <th>Update</th>
+            <th>Delete</th>
         </tr>
     </thead>
 
@@ -36,11 +39,12 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
             <td>{{this.offerCost}}</td>
             <td>{{this.offerTime}}</td>
             <td>{{this.offerTypeId}}</td>
-            <td><button onclick="updateOffer({{this.id}})">Update</button></td>
+            <td><button onclick="deleteOffer({{this.offerId}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+<script src="./js/delete_offer.js"></script>
 
 {{!-- Form to add a record to the table  --}}
 <h2>Add an Offer</h2>
@@ -68,7 +72,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
     <label for="input-cost">Karma Cost: </label>
     <input type="number" name="input-cost" id="input-cost">
 
-    <label for="input-type-id">Type Id: </label>
+    <label for="input-type-id">Offer Type: </label>
     <div class="selection">
         <select name="input-type-id" id="input-type-id">
             <option value="">Select a Offer Type</option>
