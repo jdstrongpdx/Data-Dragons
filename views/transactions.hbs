@@ -3,6 +3,10 @@ Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
 at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 -->
 
+<div class="warning">
+    <p>Notice: User must reload page after adding or deleting a record.</p>
+</div>
+
 <h2>Transactions Table</h2>
 <table id="transactions-table">
     {{!-- Header section --}}
@@ -12,7 +16,6 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
             <th>Offer Id</th>
             <th>Receiver Id</th>
             <th>Timestamp</th>
-            <th>Delete</th>
         </tr>
     </thead>
 
@@ -25,18 +28,16 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
             <td>{{this.transactionOfferId}}</td>
             <td>{{this.transactionReceiverId}}</td>
             <td>{{this.transactionTime}}</td>
-            <td><button onclick="deleteTransaction({{this.transactionId}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
-<script src="./js/delete_transaction.js"></script>
 
 {{!-- Form to add a record to the table  --}}
 <h2>Add a Transaction</h2>
 <form id="add-transaction-form-ajax">
 
-    <label for="input-transaction-offer-id">Offer Item Name: </label>
+    <label for="input-transaction-offer-id">Offer Item: </label>
     <div class="selection">
         <select name="input-transaction-offer-id" id="input-transaction-offer-id">
             <option value="">Select a Offer</option>
