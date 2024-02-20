@@ -1,5 +1,7 @@
-{{!-- Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
- https://github.com/osu-cs340-ecampus/nodejs-starter-app --}}
+<!-- 
+Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
+at https://github.com/osu-cs340-ecampus/nodejs-starter-app
+-->
 
 <table id="offer-table">
     <h2>Offers Table</h2>
@@ -9,17 +11,15 @@
         {{!-- For just the first row, we print each key of the row object as a header cell so we
         know what each column means when the phousehold-zipcode renders --}}
         <tr>
-            <th>ID</th>
-            <th>Offer Giver ID</th>
+            <th>Offer Id</th>
+            <th>Giver Id</th>
             <th>Item</th>
             <th>Description</th>
             <th>Quantity</th>
             <th>Cost</th>
-            <th>Active</th>
-            <th>Offer Timestamp</th>
-            <th>Offer Type ID</th>
+            <th>Timestamp</th>
+            <th>Offer Type</th>
             <th>Update</th>
-            <th>Delete</th>
         </tr>
     </thead>
 
@@ -34,50 +34,53 @@
             <td>{{this.offerDescription}}</td>
             <td>{{this.offerQuantity}}</td>
             <td>{{this.offerCost}}</td>
-            <td>{{this.offerActive}}</td>
             <td>{{this.offerTime}}</td>
             <td>{{this.offerTypeId}}</td>
-            <td><button onclick="updateHousehold({{this.id}})">Update</button></td>
-            <td><button onclick="deleteHousehold({{this.id}})">Delete</button></td>
+            <td><button onclick="updateOffer({{this.id}})">Update</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
 
 {{!-- Form to add a record to the table  --}}
+<h2>Add an Offer</h2>
+<form id="add-offer-form-ajax">
 
-<form id="add-person-form">
-    <h2>Add or Edit an Offer</h2>
-    <label for="input-offer-giver-id">Giver Id: </label>
-    <input type="number" name="input-offer-giver-id" id="input-offer-giver-id">
+    <label for="input-giver-id">Giver Id: </label>
+    <div class="selection">
+        <select name="input-giver-id" id="input-giver-id">
+            <option value="">Select a Giver Name</option>
+            {{#each people}}
+            <option value="{{this.personId}}"> {{this.personName}}</option>
+            {{/each}}
+        </select>
+    </div>
     
-    <label for="input-offer-item">Item: </label>
-    <input type="text" name="input-offer-item" id="input-offer-item">
+    <label for="input-item">Item: </label>
+    <input type="text" name="input-item" id="input-item">
 
-    <label for="input-offer-description">Description: </label>
-    <input type="textarea" name="input-offer-description" id="input-offer-description">
+    <label for="input-description">Description: </label>
+    <input type="textarea" name="input-description" id="input-description">
 
-    <label for="input-offer-quantity">Quantity: </label>
-    <input type="number" name="input-offer-quantity" id="input-offer-quantity">
+    <label for="input-quantity">Quantity: </label>
+    <input type="number" name="input-quantity" id="input-quantity">
 
-    <label for="input-offer-cost">Karma Cost: </label>
-    <input type="number" name="input-offer-cost" id="input-offer-cost">
+    <label for="input-cost">Karma Cost: </label>
+    <input type="number" name="input-cost" id="input-cost">
 
-    <label for="input-offer-active">Active: </label>
-    <input type="number" name="input-offer-active" id="input-offer-active">
+    <label for="input-type-id">Type Id: </label>
+    <div class="selection">
+        <select name="input-type-id" id="input-type-id">
+            <option value="">Select a Offer Type</option>
+                {{#each offerTypes}}
+                <option value="{{this.offerTypeId}}"> {{this.offerType}}</option>
+                {{/each}}
+        </select>
+    </div>
 
-    <label for="input-offer-type-id">Type Id: </label>
-    <input type="number" name="input-offer-type-id" id="input-offer-type-id">
-    &nbsp;
-    <input type="submit" value="Submit">
+
+    <input type="submit">
 </form>
 
-<form id="search-person-form">
-    <h2>Search Offer by Item</h2>
-    <form id="search-offer-html" method='GET' action='/'>
-        <label for="input-lname">Search by Item: </label>
-        <input type="text" name="lname" id="input-lname-html-search">
-        
-        <input type="submit" value="Submit">
-        <a href='/'><button>Reset</button></a>
-</form>
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_offer.js"></script>

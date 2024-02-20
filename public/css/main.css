@@ -366,6 +366,27 @@ h5, h6 {
     border-radius: 5px;
     margin: 5px;
   }
+
+/* The below dropdown CSS starter code sourced from https://stackoverflow.com/questions/1337149/how-do-i-style-form-drop-down-lists */
+
+.selection {
+  padding: 5px;
+  font-size: 100%;
+  background-color: var(--color-cream);
+  margin-bottom: 1%;
+  border: 1px solid grey;
+}
+
+select {
+  border: 0;
+  background:transparent;
+  height:25px;
+  font-size: 110%;
+  width:350px;
+  margin: 2%;
+}
+
+
   svg {}
   picture {}
     source {}

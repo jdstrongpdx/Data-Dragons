@@ -1,5 +1,6 @@
+
 // Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
-// https://github.com/osu-cs340-ecampus/nodejs-starter-app
+// at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 
 // Get the objects we need to modify
 let addPersonForm = document.getElementById('add-person-form-ajax');
@@ -11,23 +12,23 @@ addPersonForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputFirstName = document.getElementById("input-fname");
-    let inputLastName = document.getElementById("input-lname");
-    let inputHomeworld = document.getElementById("input-homeworld");
-    let inputAge = document.getElementById("input-age");
+    let inputName = document.getElementById("input-name");
+    let inputEmail = document.getElementById("input-email");
+    let inputPhoneNumber = document.getElementById("input-phone-number");
+    let inputHouseholdId = document.getElementById("input-household-id");
 
     // Get the values from the form fields
-    let firstNameValue = inputFirstName.value;
-    let lastNameValue = inputLastName.value;
-    let homeworldValue = inputHomeworld.value;
-    let ageValue = inputAge.value;
+    let nameValue = String(inputName.value);
+    let emailValue = String(inputEmail.value);
+    let phoneNumberValue = String(inputPhoneNumber.value);
+    let householdIdValue = parseInt(inputHouseholdId.value);
 
     // Put our data we want to send in a javascript object
     let data = {
-        fname: firstNameValue,
-        lname: lastNameValue,
-        homeworld: homeworldValue,
-        age: ageValue
+        name: nameValue,
+        email: emailValue,
+        phoneNumber: phoneNumberValue,
+        householdId: householdIdValue
     }
     
     // Setup our AJAX request
@@ -43,10 +44,11 @@ addPersonForm.addEventListener("submit", function (e) {
             addRowToTable(xhttp.response);
 
             // Clear the input fields for another transaction
-            inputFirstName.value = '';
-            inputLastName.value = '';
-            inputHomeworld.value = '';
-            inputAge.value = '';
+            inputName.value = '';
+            inputEmail.value = '';
+            inputPhoneNumber.value = '';
+            inputHouseholdId.value = '';
+
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
@@ -59,8 +61,7 @@ addPersonForm.addEventListener("submit", function (e) {
 })
 
 
-// Creates a single row from an Object representing a single record from 
-// bsg_people
+// Creates a single row from an Object representing a single record from People
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
@@ -76,24 +77,27 @@ addRowToTable = (data) => {
     // Create a row and 4 cells
     let row = document.createElement("TR");
     let idCell = document.createElement("TD");
-    let firstNameCell = document.createElement("TD");
-    let lastNameCell = document.createElement("TD");
-    let homeworldCell = document.createElement("TD");
-    let ageCell = document.createElement("TD");
+    let nameCell = document.createElement("TD");
+    let emailCell = document.createElement("TD");
+    let phoneNumberCell = document.createElement("TD");
+    let householdIdCell = document.createElement("TD");
+    let karmaIdCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    idCell.innerText = newRow.id;
-    firstNameCell.innerText = newRow.fname;
-    lastNameCell.innerText = newRow.lname;
-    homeworldCell.innerText = newRow.homeworld;
-    ageCell.innerText = newRow.age;
+    idCell.innerText = newRow.personId;
+    nameCell.innerText = newRow.personName;
+    emailCell.innerText = newRow.personEmail;
+    phoneNumberCell.innerText = newRow.personPhoneNumber;
+    householdIdCell.innerText = newRow.personHouseholdId;
+    karmaIdCell.innerText = newRow.personKarma;
 
     // Add the cells to the row 
     row.appendChild(idCell);
-    row.appendChild(firstNameCell);
-    row.appendChild(lastNameCell);
-    row.appendChild(homeworldCell);
-    row.appendChild(ageCell);
+    row.appendChild(nameCell);
+    row.appendChild(emailCell);
+    row.appendChild(phoneNumberCell);
+    row.appendChild(householdIdCell);
+    row.appendChild(karmaIdCell);
     
     // Add the row to the table
     currentTable.appendChild(row);

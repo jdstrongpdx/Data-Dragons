@@ -1,22 +1,20 @@
-{{!-- Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
- https://github.com/osu-cs340-ecampus/nodejs-starter-app --}}
+<!-- 
+Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
+at https://github.com/osu-cs340-ecampus/nodejs-starter-app
+-->
 
-<table id="household-table">
-    <h2>Household Table</h2>
-
+<h2>Household Table</h2>
+<table id="table">
     {{!-- Header section --}}
     <thead>
 
         <tr>
-            <th>ID</th>
+            <th>Household Id</th>
             <th>Address</th>
             <th>City</th>
             <th>State</th>
             <th>Zip Code</th>
-            <th>Active</th>
-            <th>Neighborhood ID</th>
-            <th>Update</th>
-            <th>Delete</th>
+            <th>Neighborhood Id</th>
         </tr>
     </thead>
 
@@ -30,46 +28,43 @@
             <td>{{this.householdCity}}</td>
             <td>{{this.householdState}}</td>
             <td>{{this.householdZipcode}}</td>
-            <td>{{this.householdActive}}</td>
             <td>{{this.householdNeighborhoodId}}</td>
-            <td><button onclick="updateHousehold({{this.id}})">Update</button></td>
-            <td><button onclick="deleteHousehold({{this.id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
 
 {{!-- Form to add a record to the table  --}}
-
-<form id="add-person-form">
-    <h2>Add or Edit a Household</h2>
-    <label for="input-household-address">Address: </label>
-    <input type="text" name="input-household-address" id="input-household-address">
+<h2>Add a Household</h2>
+<form id="add-household-form-ajax">
+    <label for="input-address">Address: </label>
+    <input type="text" name="input-address" id="input-address">
     
-    <label for="input-household-city">City: </label>
-    <input type="text" name="input-household-city" id="input-household-city">
+    <label for="input-city">City: </label>
+    <input type="text" name="input-city" id="input-city">
 
-    <label for="input-household-state">State: </label>
-    <input type="text" name="input-household-state" id="input-household-state">
+    <label for="input-state">State: </label>
+    <input type="text" name="input-state" id="input-state">
 
-    <label for="input-household-zipcode">Zip Code: </label>
-    <input type="text" name="input-household-zipcode" id="input-household-zipcode">
+    <label for="input-zipcode">Zip Code: </label>
+    <input type="text" name="input-zipcode" id="input-zipcode">
 
-    <label for="input-household-active">Active: </label>
-    <input type="number" name="input-household-Active" id="input-household-Active">
 
-    <label for="input-household-neighborhood-id">Neighborhood Id: </label>
-    <input type="number" name="input-household-neighborhood-id" id="input-household-neighborhood-id">
-    &nbsp;
-    <input type="submit" value="Submit">
+    <label for="input-neighborhood-id">Neighborhood Id: </label>
+    <div class="selection">
+        <select name="input-neighborhood-id" id="input-neighborhood-id">
+            <option value="">Select a Neighborhood</option>
+            {{#each neighborhoods}}
+            <option value="{{this.neighborhoodId}}"> {{this.neighborhoodName}}</option>
+            {{/each}}
+        </select>
+    </div>
+
+    <input type="submit">
 </form>
 
-<form id="search-household-form">
-    <h2>Search Household by Address</h2>
-    <form id="search-person-html" method='GET' action='/'>
-        <label for="input-lname">Search by Address: </label>
-        <input type="text" name="lname" id="input-lname-html-search">
-        
-        <input type="submit" value="Submit">
-        <a href='/'><button>Reset</button></a>
-</form>
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_household.js"></script>
+
+

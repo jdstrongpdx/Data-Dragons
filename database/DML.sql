@@ -23,11 +23,11 @@ SELECT personName, personEmail, householdAddress, householdCity, householdState,
 INNER JOIN Households ON personHouseholdID = householdID
 INNER JOIN Neighborhoods ON householdNeighborhoodId = neighborhoodID;
 
--- Get table of transaction items, giver, and receiever
-SELECT offerItem as Item, g.personName as Giver, r.personName as Reciever FROM Transactions
+-- Get table of transaction items, giver, and receiver
+SELECT offerItem as Item, g.personName as Giver, r.personName as Receiver FROM Transactions
 INNER JOIN Offers ON transactionOfferID = offerID
 INNER JOIN People AS g ON g.personId = offerGiverID
-INNER JOIN People AS r ON r.personID = transactionRecieverId;
+INNER JOIN People AS r ON r.personID = transactionReceiverId;
 
 -- Create Operations
 
@@ -63,10 +63,10 @@ VALUES (
     *cost, 
     (SELECT offerTypeId FROM OfferTypes WHERE offerType = '*offerTypeName'));
 
-INSERT INTO Transactions (transactionOfferID, transactionRecieverID) VALUES
+INSERT INTO Transactions (transactionOfferID, transactionReceiverID) VALUES
 VALUES (
     (SELECT offerID FROM Offers WHERE offerItem = '*item'), 
-    (SELECT personId FROM People WHERE personEmail = '*recieverUserName'));
+    (SELECT personId FROM People WHERE personEmail = '*receiverUserName'));
 
 
 -- Update Operations
@@ -84,7 +84,7 @@ WHERE
 UPDATE Transactions
 SET
     transactionOfferID = (SELECT offerID FROM Offers WHERE offerItem = '*newItem'),
-    transactionRecieverID = (SELECT personId FROM People WHERE personEmail = '*recieverUserName')
+    transactionRecieverID = (SELECT personId FROM People WHERE personEmail = '*receiverUserName')
 WHERE
     transactionId = *id;
 
@@ -95,9 +95,9 @@ WHERE
 DELETE FROM Transactions WHERE transactionOfferID = (SELECT offerID FROM Offers WHERE offerItem = '*itemVoided');
 
 -- Delete all transactions involving a particular buyer
-DELETE FROM Transactions WHERE transactionRecieverID = (SELECT personId FROM People WHERE personEmail = '*personUserNameVoided');
+DELETE FROM Transactions WHERE transactionReceiverID = (SELECT personId FROM People WHERE personEmail = '*personUserNameVoided');
 
 -- Delete a particular transaction
 DELETE FROM Transactions WHERE 
 transactionOfferID = (SELECT offerID FROM Offers WHERE offerItem = '*itemVoided')
-AND transactionRecieverID = (SELECT personId FROM People WHERE personEmail = '*personUserNameVoided');
+AND transactionReceiverID = (SELECT personId FROM People WHERE personEmail = '*personUserNameVoided');

@@ -1,15 +1,15 @@
-{{!-- Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
- https://github.com/osu-cs340-ecampus/nodejs-starter-app --}}
+<!-- 
+Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
+at https://github.com/osu-cs340-ecampus/nodejs-starter-app
+-->
 
 <table id="offer-type-table">
     <h2>Offer Types Table</h2>
     <thead>
 
         <tr>
-            <th>ID</th>
-            <th>Type</th>
-            <th>Update</th>
-            <th>Delete</th>
+            <th>Offer Type Id</th>
+            <th>Offer Type</th>
         </tr>
     </thead>
 
@@ -19,28 +19,18 @@
         <tr data-value={{this.id}}>
             <td>{{this.offerTypeId}}</td>
             <td>{{this.offerType}}</td>
-            <td><button onclick="updateHousehold({{this.id}})">Update</button></td>
-            <td><button onclick="deleteHousehold({{this.id}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
 
-
-<form id="add-person-form">
-    <h2>Add or Edit an Offer</h2>
+<h2>Add an Offer Type</h2>
+<form id="add-offer-type-form-ajax">
     <label for="input-offer-type">Offer Type: </label>
-    <input type="text" name="input-household-address" id="input-household-address">
-    &nbsp;
-    <input type="submit" value="Submit">
+    <input type="text" name="input-offer-type" id="input-offer-type">
+
+    <input type="submit">
 </form>
 
-<form id="search-person-form">
-    <h2>Search Offer Type by Name</h2>
-    <form id="search-offer-type-html" method='GET' action='/'>
-        <label for="input-lname">Search by Name: </label>
-        <input type="text" name="lname" id="input-lname-html-search">
-        
-        <input type="submit" value="Submit">
-        <a href='/'><button>Reset</button></a>
-</form>
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_offer_type.js"></script>

@@ -1,16 +1,17 @@
-// Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
-// https://github.com/osu-cs340-ecampus/nodejs-starter-app
+<!-- 
+Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
+at https://github.com/osu-cs340-ecampus/nodejs-starter-app
+-->
 
 <table id="transactions-table">
     <h2>Transactions Table</h2>
     {{!-- Header section --}}
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Offer ID</th>
-            <th>Reciever ID</th>
-            <th>Transaction Timestamp</th>
-            <th>Update</th>
+            <th>Transaction Id</th>
+            <th>Offer Id</th>
+            <th>Receiver Id</th>
+            <th>Timestamp</th>
             <th>Delete</th>
         </tr>
     </thead>
@@ -22,44 +23,42 @@
         <tr data-value={{this.id}}>
             <td>{{this.transactionId}}</td>
             <td>{{this.transactionOfferId}}</td>
-            <td>{{this.transactionRecieverId}}</td>
+            <td>{{this.transactionReceiverId}}</td>
             <td>{{this.transactionTime}}</td>
-            <td><button onclick="updateHousehold({{this.id}})">Update</button></td>
-            <td><button onclick="deleteHousehold({{this.id}})">Delete</button></td>
+            <td><button onclick="deleteTransaction({{this.transactionId}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+<script src="./js/delete_transaction.js"></script>
 
 {{!-- Form to add a record to the table  --}}
+<h2>Add a Transaction</h2>
+<form id="add-transaction-form-ajax">
 
-<form id="add-person-form">
-    <h2>Add or Edit a Transaction</h2>
-    <label for="input-transaction-offer-id">Offer Id: </label>
-    <input type="number" name="input-transaction-offer-id" id="input-transaction-offer-id">
-    
-    <label for="input-reciever-id">Reciever Id: </label>
-    <input type="number" name="input-reciever-id" id="input-reciever-id">
-    &nbsp;
-    <input type="submit" value="Submit">
+    <label for="input-transaction-offer-id">Offer Item Name: </label>
+    <div class="selection">
+        <select name="input-transaction-offer-id" id="input-transaction-offer-id">
+            <option value="">Select a Offer</option>
+            {{#each offers}}
+            <option value="{{this.offerId}}"> {{this.offerItem}}</option>
+            {{/each}}
+        </select>
+    </div>
+
+    <label for="input-reciever-id">Reciever Name: </label>
+    <div class="selection">
+        <select name="input-reciever-id" id="input-reciever-id">
+            <option value="">Select a Reciever Name</option>
+            {{#each people}}
+            <option value="{{this.personId}}"> {{this.personName}}</option>
+            {{/each}}
+        </select>
+    </div>
+
+    <input type="submit">
 </form>
 
-<form id="search-giver-form">
-    <h2>Search Transaction by Giver</h2>
-    <form id="search-person-html" method='GET' action='/'>
-        <label for="input-lname">Search by Giver: </label>
-        <input type="text" name="lname" id="input-lname-html-search">
-        
-        <input type="submit" value="Submit">
-        <a href='/'><button>Reset</button></a>
-</form>
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_transaction.js"></script>
 
-<form id="search-person-form">
-    <h2>Search Transaction by Reciever</h2>
-    <form id="search-person-html" method='GET' action='/'>
-        <label for="input-lname">Search by Reciever: </label>
-        <input type="text" name="lname" id="input-lname-html-search">
-        
-        <input type="submit" value="Submit">
-        <a href='/'><button>Reset</button></a>
-</form>
