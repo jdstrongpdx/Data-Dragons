@@ -4,13 +4,13 @@
 -- Select Operations
 
 -- Get table of household addresses and IDs for a dropdown
-SELECT householdId, householdAddress FROM Households;
+SELECT householdID, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress FROM Households;
 
 -- Get table of neighborhood names and IDs for a dropdown
 SELECT neighborhoodId, neighborhoodName FROM Neighborhoods;
 
 -- Get table of people user names (email) and IDs for a dropdown
-SELECT personEmail, personName FROM People;
+SELECT personID, personEmail FROM People;
 
 -- Get table of offer types and IDs for a dropdown
 SELECT offerTypeId, offerType FROM OfferTypes;
@@ -18,13 +18,25 @@ SELECT offerTypeId, offerType FROM OfferTypes;
 -- Get table of offers and IDs for a dropdown
 SELECT offerID, offerItem FROM Offers;
 
--- Get table of people with their address and neighborhood
-SELECT personName, personEmail, householdAddress, householdCity, householdState, householdZipCode, neighborhoodName FROM People
-INNER JOIN Households ON personHouseholdID = householdID
-INNER JOIN Neighborhoods ON householdNeighborhoodId = neighborhoodID;
+-- Get table of people with household address instead of householdID
+SELECT personID, personName, personEmail, personPhoneNumber, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress, personKarma 
+FROM People
+INNER JOIN Households ON personHouseholdID = householdID;
 
--- Get table of transaction items, giver, and receiver
-SELECT offerItem as Item, g.personName as Giver, r.personName as Receiver FROM Transactions
+-- Get table of households with neighborhood name instead of neighborhoodID
+SELECT householdID, householdAddress, householdCity, householdState, householdZipCode, neighborhoodName 
+FROM Households
+INNER JOIN Neighborhoods ON neighborhoodID = householdNeighborhoodId;
+
+-- Get table of offers with person email instead of giverID and offertype name instead of OfferTypeID 
+SELECT offerID, personEmail as giverEmail, offerItem, offerDescription, offerQuantity, offerCost, offerTime, offerType
+FROM Offers
+INNER JOIN People ON offerGiverId = personID
+INNER JOIN OfferTypes ON Offers.offerTypeId = OfferTypes.offerTypeId;
+
+-- Get table of transaction with item name, person email instead of giverID and receiverID
+SELECT transactionID, offerItem as Item, g.personName as Giver, r.personName as Receiver, transactionTime 
+FROM Transactions
 INNER JOIN Offers ON transactionOfferID = offerID
 INNER JOIN People AS g ON g.personId = offerGiverID
 INNER JOIN People AS r ON r.personID = transactionReceiverId;
@@ -48,7 +60,8 @@ VALUES (
     '*name', 
     '*email', 
     '*phone',
-    (SELECT householdId FROM Households WHERE householdAddress = '*address' AND householdCity = '*city' AND householdState = '*state' AND householdZipcode = '*zip'));
+    (SELECT householdId FROM Households WHERE householdAddress = '*address' AND householdCity = '*city' AND householdState = '*state' AND householdZipcode = '*zip')),
+    *karma;
 
 INSERT INTO OfferTypes (offerType)
 VALUES (
@@ -61,43 +74,31 @@ VALUES (
     '*description', 
     *quantity, 
     *cost, 
+    *time,
     (SELECT offerTypeId FROM OfferTypes WHERE offerType = '*offerTypeName'));
 
 INSERT INTO Transactions (transactionOfferID, transactionReceiverID) VALUES
 VALUES (
     (SELECT offerID FROM Offers WHERE offerItem = '*item'), 
-    (SELECT personId FROM People WHERE personEmail = '*receiverUserName'));
+    (SELECT personId FROM People WHERE personEmail = '*receiverUserName')),
+    *time;
 
 
 -- Update Operations
 
--- Update an individuals email, phone, or address if one is provided, otherwise maintain the current one
+-- Update an individuals information to new values
 UPDATE People
 SET 
-    personEmail = IsNull(*newEmail, '*updateUserName'),
-    personPhoneNumber = IsNull(*newNumber, (SELECT personPhoneNumber FROM People WHERE personEmail = '*updateUserName')),
-    personHouseholdId = IsNull(*newHousehold, (SELECT personHouseholdId FROM People WHERE personEmail = '*updateUserName'))
+    personName = *newName,
+    personEmail = *newEmail,
+    personPhoneNumber = *newNumber,
+    personHouseholdId = *newHousehold
+    personKarma = *newKarma
 WHERE
     personID = (SELECT personId FROM People WHERE personEmail = '*updateUserName');
-
--- Update a transaction
-UPDATE Transactions
-SET
-    transactionOfferID = (SELECT offerID FROM Offers WHERE offerItem = '*newItem'),
-    transactionRecieverID = (SELECT personId FROM People WHERE personEmail = '*receiverUserName')
-WHERE
-    transactionId = *id;
 
 
 -- Delete Operations
 
--- Delete all transactions involving a particular offer
-DELETE FROM Transactions WHERE transactionOfferID = (SELECT offerID FROM Offers WHERE offerItem = '*itemVoided');
-
--- Delete all transactions involving a particular buyer
-DELETE FROM Transactions WHERE transactionReceiverID = (SELECT personId FROM People WHERE personEmail = '*personUserNameVoided');
-
--- Delete a particular transaction
-DELETE FROM Transactions WHERE 
-transactionOfferID = (SELECT offerID FROM Offers WHERE offerItem = '*itemVoided')
-AND transactionReceiverID = (SELECT personId FROM People WHERE personEmail = '*personUserNameVoided');
+-- Delete an Offer by name, cascade deletes transactions
+DELETE FROM Offers WHERE offerID = (SELECT offerID FROM Offers WHERE offerItem = '*itemName');
