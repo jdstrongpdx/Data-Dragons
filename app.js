@@ -201,8 +201,8 @@ app.post('/add-person-ajax', function(req, res)
                 // If all went well, send the results of the query back.
                 else
                 {
-                    app.get('/people');
-                    //res.send(rows);
+                    // app.get('/people');
+                    res.send(rows);
                 }
             })
         }

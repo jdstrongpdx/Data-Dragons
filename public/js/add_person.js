@@ -66,39 +66,22 @@ addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
     let currentTable = document.getElementById("people-table");
+    let tbody = currentTable.getElementsByTagName("tbody")[0];
+    let lastRow = tbody.lastElementChild;
+    let newRow = lastRow.cloneNode(true);
 
-    // Get the location where we should insert the new row (end of table)
-    let newRowIndex = currentTable.rows.length;
-
-    // Get a reference to the new row from the database query (last object)
+    // Get the new data
     let parsedData = JSON.parse(data);
-    let newRow = parsedData[parsedData.length - 1]
+    let newRowData = parsedData[parsedData.length - 1]
 
-    // Create a row and 4 cells
-    let row = document.createElement("TR");
-    let idCell = document.createElement("TD");
-    let nameCell = document.createElement("TD");
-    let emailCell = document.createElement("TD");
-    let phoneNumberCell = document.createElement("TD");
-    let householdIdCell = document.createElement("TD");
-    let karmaIdCell = document.createElement("TD");
-
-    // Fill the cells with correct data
-    idCell.innerText = newRow.personId;
-    nameCell.innerText = newRow.personName;
-    emailCell.innerText = newRow.personEmail;
-    phoneNumberCell.innerText = newRow.personPhoneNumber;
-    householdIdCell.innerText = newRow.personHouseholdId;
-    karmaIdCell.innerText = newRow.personKarma;
-
-    // Add the cells to the row 
-    row.appendChild(idCell);
-    row.appendChild(nameCell);
-    row.appendChild(emailCell);
-    row.appendChild(phoneNumberCell);
-    row.appendChild(householdIdCell);
-    row.appendChild(karmaIdCell);
+    // Replace the content of the new row with the data we obtained
+    newRow.cells[0].textContent  = newRowData.personId;
+    newRow.cells[1].textContent  = newRowData.personName;
+    newRow.cells[2].textContent  = newRowData.personEmail;
+    newRow.cells[3].textContent  = newRowData.personPhoneNumber;
+    newRow.cells[4].textContent  = newRowData.personHouseholdId;
+    newRow.cells[5].textContent  = newRowData.personKarma;
     
     // Add the row to the table
-    currentTable.appendChild(row);
+    tbody.appendChild(newRow);
 }
