@@ -433,7 +433,7 @@ app.delete('/delete-offer-ajax/', function(req,res,next){
 
         else
         {
-        res.redirect("/offers");
+        res.sendStatus(204);
         }
   })
 });
