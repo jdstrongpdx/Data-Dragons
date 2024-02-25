@@ -90,7 +90,7 @@ addRowToTable = (data) => {
    cityCell.innerText = newRow.householdCity;	
    stateCell.innerText = newRow.householdState;	
    zipCell.innerText = newRow.householdZipcode;	
-   neighborhoodIDCell.innerText = newRow.householdNeighborhoodId;
+   neighborhoodIDCell.innerText = newRow.neighborhoodName;
    
    // Add the cells to the row 	
    row.appendChild(idCell);	

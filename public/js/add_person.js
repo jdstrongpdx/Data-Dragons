@@ -88,7 +88,7 @@ addRowToTable = (data) => {
     nameCell.innerText = newRow.personName;	
     emailCell.innerText = newRow.personEmail;	
     phoneNumberCell.innerText = newRow.personPhoneNumber;	
-    householdIdCell.innerText = newRow.personHouseholdId;	
+    householdIdCell.innerText = newRow.fullAddress;	
     karmaIdCell.innerText = newRow.personKarma;
     editButton.innerHTML = `<button onclick="updatePerson()">Update</button>`;  
     

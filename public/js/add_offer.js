@@ -94,13 +94,13 @@ addRowToTable = (data) => {
 
     // Fill the cells with correct data	
     idCell.innerText = newRow.offerId;	
-    giverIdcell.innerText = newRow.offerGiverId;	
+    giverIdcell.innerText = newRow.giverEmail;	
     itemCell.innerText = newRow.offerItem;	
     descriptionCell.innerText = newRow.offerDescription;	
     quantityCell.innerText = newRow.offerQuantity;	
     costCell.innerText = newRow.offerCost;
     timestampCell.innerText = newRow.offerTime;
-    offerTypeCell.innerText = newRow.offerTypeId;
+    offerTypeCell.innerText = newRow.offerType;
     deleteButton.innerHTML = `<button onclick="deleteOffer(${newRow.offerId})">Delete</button>`;  
     
     // Add the cells to the row 	

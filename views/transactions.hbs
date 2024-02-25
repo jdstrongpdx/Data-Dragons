@@ -9,8 +9,8 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
     <thead>
         <tr>
             <th>Transaction Id</th>
-            <th>Offer Id</th>
-            <th>Receiver Id</th>
+            <th>Item</th>
+            <th>Receiver</th>
             <th>Timestamp</th>
         </tr>
     </thead>
@@ -21,8 +21,8 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
         {{#each data}}
         <tr data-value={{this.id}}>
             <td>{{this.transactionId}}</td>
-            <td>{{this.transactionOfferId}}</td>
-            <td>{{this.transactionReceiverId}}</td>
+            <td>{{this.item}}</td>
+            <td>{{this.receiver}}</td>
             <td>{{this.transactionTime}}</td>
         </tr>
         {{/each}}

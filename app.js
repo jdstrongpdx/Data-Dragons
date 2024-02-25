@@ -43,7 +43,12 @@ app.get('/people', function(req, res)
 
     if (req.query.qname === undefined)
     {
-        query1 = "SELECT * FROM People;";
+        query1 = `
+        SELECT personId, personName, personEmail, personPhoneNumber, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress, personKarma 
+        FROM People
+        LEFT JOIN Households ON personHouseholdID = householdID
+        ORDER BY personID;
+        `;
     }
 
     // If there is a query string, we assume this is a search, and return desired results
@@ -70,7 +75,12 @@ app.get('/people', function(req, res)
 
 app.get('/households', function(req, res)
 {  
-    let query1 = "SELECT * FROM Households;";
+    let query1 = `
+    SELECT householdId, householdAddress, householdCity, householdState, householdZipcode, neighborhoodName 
+    FROM Households
+    INNER JOIN Neighborhoods ON neighborhoodID = householdNeighborhoodId
+    ORDER BY householdId;
+    `;
 
     // Query 2 is the same in both cases
     let query2 = "SELECT * FROM Neighborhoods;";
@@ -99,7 +109,13 @@ app.get('/neighborhoods', function(req, res)
 
 app.get('/offers', function(req, res)
 {  
-    let query1 = "SELECT * FROM Offers;";
+    let query1 = `
+    SELECT offerId, personEmail as giverEmail, offerItem, offerDescription, offerQuantity, offerCost, offerTime, offerType
+    FROM Offers
+    INNER JOIN People ON offerGiverId = personId
+    INNER JOIN OfferTypes ON Offers.offerTypeId = OfferTypes.offerTypeId
+    ORDER BY offerId;
+    `;
 
     // Query 2 is the same in both cases
     let query2 = "SELECT * FROM OfferTypes;";
@@ -133,7 +149,14 @@ app.get('/offerTypes', function(req, res)
 
 app.get('/transactions', function(req, res)
 {  
-    let query1 = "SELECT * FROM Transactions;";
+    let query1 = `
+    SELECT transactionId, offerItem as item, g.personName as giver, r.personName as receiver, transactionTime 
+    FROM Transactions
+    INNER JOIN Offers ON transactionOfferId = offerId
+    INNER JOIN People AS g ON g.personId = offerGiverId
+    INNER JOIN People AS r ON r.personId = transactionReceiverId
+    ORDER BY transactionId;
+    `;
 
     // Query 2 is the same in both cases
     let query2 = "SELECT * FROM Offers;";
@@ -188,7 +211,13 @@ app.post('/add-person-ajax', function(req, res)
         else
         {
             // If there was no error, retrieve the new table state
-            query2 = `SELECT * FROM People;`;
+            query2 = 
+            `
+            SELECT personId, personName, personEmail, personPhoneNumber, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress, personKarma 
+            FROM People
+            LEFT JOIN Households ON personHouseholdID = householdID
+            ORDER BY personID;
+            `;
             db.pool.query(query2, function(error, rows, fields){
 
                 // If there was an error on the second query, send a 400
@@ -235,7 +264,12 @@ app.post('/add-household-ajax', function(req, res)
         else
         {
             // If there was no error, retrieve the new table state
-            query2 = `SELECT * FROM Households;`;
+            query2 = `
+            SELECT householdId, householdAddress, householdCity, householdState, householdZipcode, neighborhoodName 
+            FROM Households
+            INNER JOIN Neighborhoods ON neighborhoodID = householdNeighborhoodId
+            ORDER BY householdId;
+            `;
             db.pool.query(query2, function(error, rows, fields){
 
                 // If there was an error on the second query, send a 400
@@ -315,7 +349,13 @@ app.post('/add-offer-ajax', function(req, res)
         else
         {
             // If there was no error, retrieve the new table state
-            query2 = `SELECT * FROM Offers;`;
+            query2 = `
+            SELECT offerId, personEmail as giverEmail, offerItem, offerDescription, offerQuantity, offerCost, offerTime, offerType
+            FROM Offers
+            INNER JOIN People ON offerGiverId = personId
+            INNER JOIN OfferTypes ON Offers.offerTypeId = OfferTypes.offerTypeId
+            ORDER BY offerId;
+            `;
             db.pool.query(query2, function(error, rows, fields){
 
                 // If there was an error on the second query, send a 400
@@ -397,7 +437,14 @@ app.post('/add-transaction-ajax', function(req, res)
         }
         {
             // If there was no error, retrieve the new table state
-            query2 = `SELECT * FROM Transactions;`;
+            query2 = `
+            SELECT transactionId, offerItem as item, g.personName as giver, r.personName as receiver, transactionTime 
+            FROM Transactions
+            INNER JOIN Offers ON transactionOfferId = offerId
+            INNER JOIN People AS g ON g.personId = offerGiverId
+            INNER JOIN People AS r ON r.personId = transactionReceiverId
+            ORDER BY transactionId;
+            `;
             db.pool.query(query2, function(error, rows, fields){
 
                 // If there was an error on the second query, send a 400

@@ -72,8 +72,8 @@ addRowToTable = (data) => {
  
     // Fill the cells with correct data	
     idCell.innerText = newRow.transactionId;	
-    offerIdCell.innerText = newRow.transactionOfferId;	
-    receieverIdCell.innerText = newRow.transactionReceiverId;	
+    offerIdCell.innerText = newRow.item;	
+    receieverIdCell.innerText = newRow.receiver;	
     timeStamp.innerText = newRow.transactionTime;	
 
     // Add the cells to the row 	
