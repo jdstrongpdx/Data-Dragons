@@ -35,7 +35,7 @@ addTransactionForm.addEventListener("submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            // addRowToTable(xhttp.response);
+            addRowToTable(xhttp.response);
 
             // Clear the input fields for another transaction
             inputName.value = '';
@@ -50,3 +50,38 @@ addTransactionForm.addEventListener("submit", function (e) {
     xhttp.send(JSON.stringify(data));
 
 })
+
+// Creates a single row from an Object representing a single record from Transactions
+addRowToTable = (data) => {
+
+    // Get a reference to the current table on the page and clear it out.
+    let currentTable = document.getElementById("transactions-table");
+    let tbody = currentTable.getElementsByTagName("tbody")[0];
+ 
+    // Get the new data
+    let parsedData = JSON.parse(data);
+    let newRow = parsedData[parsedData.length - 1]
+ 
+    // Replace the content of the new row with the data we obtained
+    let row = document.createElement("TR");	   
+    let idCell = document.createElement("TD");
+    let offerIdCell = document.createElement("TD");
+    let receieverIdCell = document.createElement("TD");
+    let timeStamp = document.createElement("TD");
+
+ 
+    // Fill the cells with correct data	
+    idCell.innerText = newRow.transactionId;	
+    offerIdCell.innerText = newRow.transactionOfferId;	
+    receieverIdCell.innerText = newRow.transactionReceiverId;	
+    timeStamp.innerText = newRow.transactionTime;	
+
+    // Add the cells to the row 	
+    row.appendChild(idCell);	
+    row.appendChild(offerIdCell);	
+    row.appendChild(receieverIdCell);	
+    row.appendChild(timeStamp);	
+ 
+    // Add the row to the table
+    tbody.appendChild(row);
+ }

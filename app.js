@@ -187,7 +187,7 @@ app.post('/add-person-ajax', function(req, res)
         }
         else
         {
-            // If there was no error, perform a SELECT * on People
+            // If there was no error, retrieve the new table state
             query2 = `SELECT * FROM People;`;
             db.pool.query(query2, function(error, rows, fields){
 
@@ -234,7 +234,24 @@ app.post('/add-household-ajax', function(req, res)
         }
         else
         {
-                res.redirect("/households");
+            // If there was no error, retrieve the new table state
+            query2 = `SELECT * FROM Households;`;
+            db.pool.query(query2, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    // app.get('/people');
+                    res.send(rows);
+                }
+            })
         }
     })
 });
@@ -257,7 +274,24 @@ app.post('/add-neighborhood-ajax', function(req, res)
         }
         else
         {
-                res.redirect("/neighborhoods");
+            // If there was no error, retrieve the new table state
+            query2 = `SELECT * FROM Neighborhoods;`;
+            db.pool.query(query2, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    // app.get('/people');
+                    res.send(rows);
+                }
+            })
         }
     })
 });
@@ -280,7 +314,24 @@ app.post('/add-offer-ajax', function(req, res)
         }
         else
         {
-                res.redirect("/offers");
+            // If there was no error, retrieve the new table state
+            query2 = `SELECT * FROM Offers;`;
+            db.pool.query(query2, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    // app.get('/people');
+                    res.send(rows);
+                }
+            })
         }
     })
 });
@@ -301,9 +352,25 @@ app.post('/add-offer-type-ajax', function(req, res)
             console.log(error)
             res.sendStatus(400);
         }
-        else
         {
-                res.redirect("/offerTypes");
+            // If there was no error, retrieve the new table state
+            query2 = `SELECT * FROM OfferTypes;`;
+            db.pool.query(query2, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    // app.get('/people');
+                    res.send(rows);
+                }
+            })
         }
     })
 });
@@ -328,9 +395,25 @@ app.post('/add-transaction-ajax', function(req, res)
             console.log(error)
             res.sendStatus(400);
         }
-        else
         {
-                res.redirect("/transactions");
+            // If there was no error, retrieve the new table state
+            query2 = `SELECT * FROM Transactions;`;
+            db.pool.query(query2, function(error, rows, fields){
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+                    
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else
+                {
+                    // app.get('/people');
+                    res.send(rows);
+                }
+            })
         }
     })
 });

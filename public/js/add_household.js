@@ -44,7 +44,7 @@ addHouseholdForm.addEventListener("submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            // addRowToTable(xhttp.response);
+            addRowToTable(xhttp.response);
 
             // Clear the input fields for another transaction
             inputAddress.value = '';
@@ -62,3 +62,44 @@ addHouseholdForm.addEventListener("submit", function (e) {
     xhttp.send(JSON.stringify(data));
 
 })
+
+
+// Creates a single row from an Object representing a single record from Households
+addRowToTable = (data) => {
+
+   // Get a reference to the current table on the page and clear it out.
+   let currentTable = document.getElementById("household-table");
+   let tbody = currentTable.getElementsByTagName("tbody")[0];
+
+   // Get the new data
+   let parsedData = JSON.parse(data);
+   let newRow = parsedData[parsedData.length - 1]
+
+   // Replace the content of the new row with the data we obtained
+   let row = document.createElement("TR");	   
+   let idCell = document.createElement("TD");
+   let addressCell = document.createElement("TD");
+   let cityCell = document.createElement("TD");
+   let stateCell = document.createElement("TD");
+   let zipCell = document.createElement("TD");
+   let neighborhoodIDCell = document.createElement("TD");
+
+   // Fill the cells with correct data	
+   idCell.innerText = newRow.householdId;	
+   addressCell.innerText = newRow.householdAddress;	
+   cityCell.innerText = newRow.householdCity;	
+   stateCell.innerText = newRow.householdState;	
+   zipCell.innerText = newRow.householdZipcode;	
+   neighborhoodIDCell.innerText = newRow.householdNeighborhoodId;
+   
+   // Add the cells to the row 	
+   row.appendChild(idCell);	
+   row.appendChild(addressCell);	
+   row.appendChild(cityCell);	
+   row.appendChild(stateCell);	
+   row.appendChild(zipCell);	
+   row.appendChild(neighborhoodIDCell);
+
+   // Add the row to the table
+   tbody.appendChild(row);
+}
