@@ -1,33 +1,49 @@
--- Note: an asterisk designates that the following variable is user-provided through the web interface
+-- Note: an asterisk designates that the following variable is user-provIded through the web interface
 
 
 -- Select Operations
 
--- Get table of household addresses and IDs for a dropdown
-SELECT householdId, householdAddress FROM Households;
+-- Get table of household addresses and Ids for a dropdown
+SELECT householdId, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipcode) AS fullAddress FROM Households;
 
--- Get table of neighborhood names and IDs for a dropdown
+-- Get table of neighborhood names and Ids for a dropdown
 SELECT neighborhoodId, neighborhoodName FROM Neighborhoods;
 
--- Get table of people user names (email) and IDs for a dropdown
-SELECT personEmail, personName FROM People;
+-- Get table of people user names (email) and Ids for a dropdown
+SELECT personId, personEmail FROM People;
 
--- Get table of offer types and IDs for a dropdown
+-- Get table of offer types and Ids for a dropdown
 SELECT offerTypeId, offerType FROM OfferTypes;
 
--- Get table of offers and IDs for a dropdown
-SELECT offerID, offerItem FROM Offers;
+-- Get table of offers and Ids for a dropdown
+SELECT offerId, offerItem FROM Offers;
 
--- Get table of people with their address and neighborhood
-SELECT personName, personEmail, householdAddress, householdCity, householdState, householdZipCode, neighborhoodName FROM People
-INNER JOIN Households ON personHouseholdID = householdID
-INNER JOIN Neighborhoods ON householdNeighborhoodId = neighborhoodID;
+-- Get table of people with household address instead of householdId
+SELECT personId, personName, personEmail, personPhoneNumber, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipcode) AS fullAddress, personKarma 
+FROM People
+INNER JOIN Households ON personHouseholdId = householdId;
+ORDER BY personId;
 
--- Get table of transaction items, giver, and receiver
-SELECT offerItem as Item, g.personName as Giver, r.personName as Receiver FROM Transactions
-INNER JOIN Offers ON transactionOfferID = offerID
-INNER JOIN People AS g ON g.personId = offerGiverID
-INNER JOIN People AS r ON r.personID = transactionReceiverId;
+-- Get table of households with neighborhood name instead of neighborhoodId
+SELECT householdId, householdAddress, householdCity, householdState, householdZipcode, neighborhoodName 
+FROM Households
+INNER JOIN Neighborhoods ON neighborhoodId = householdNeighborhoodId
+ORDER BY householdId;
+
+-- Get table of offers with person email instead of giverId and offertype name instead of OfferTypeId 
+SELECT offerId, personEmail as giverEmail, offerItem, offerDescription, offerQuantity, offerCost, offerTime, offerType
+FROM Offers
+INNER JOIN People ON offerGiverId = personId
+INNER JOIN OfferTypes ON Offers.offerTypeId = OfferTypes.offerTypeId
+ORDER BY offerId;
+
+-- Get table of transaction with item name, person email instead of giverId and receiverId
+SELECT transactionId, offerItem as item, g.personName as giver, r.personName as receiver, transactionTime 
+FROM Transactions
+INNER JOIN Offers ON transactionOfferId = offerId
+INNER JOIN People AS g ON g.personId = offerGiverId
+INNER JOIN People AS r ON r.personId = transactionReceiverId
+ORDER BY transactionId;
 
 -- Create Operations
 
@@ -35,7 +51,7 @@ INSERT INTO Neighborhoods (neighborhoodName)
 VALUES (
     '*name');
 
-INSERT INTO Households (householdAddress, householdCity, householdState, householdZipCode, householdNeighborhoodId)
+INSERT INTO Households (householdAddress, householdCity, householdState, householdZipcode, householdNeighborhoodId)
 VALUES (
     '*address', 
     '*city', 
@@ -48,7 +64,8 @@ VALUES (
     '*name', 
     '*email', 
     '*phone',
-    (SELECT householdId FROM Households WHERE householdAddress = '*address' AND householdCity = '*city' AND householdState = '*state' AND householdZipcode = '*zip'));
+    (SELECT householdId FROM Households WHERE householdAddress = '*address' AND householdCity = '*city' AND householdState = '*state' AND householdZipcode = '*zip')),
+    *karma;
 
 INSERT INTO OfferTypes (offerType)
 VALUES (
@@ -61,43 +78,31 @@ VALUES (
     '*description', 
     *quantity, 
     *cost, 
+    *time,
     (SELECT offerTypeId FROM OfferTypes WHERE offerType = '*offerTypeName'));
 
-INSERT INTO Transactions (transactionOfferID, transactionReceiverID) VALUES
+INSERT INTO Transactions (transactionOfferId, transactionReceiverId) VALUES
 VALUES (
-    (SELECT offerID FROM Offers WHERE offerItem = '*item'), 
-    (SELECT personId FROM People WHERE personEmail = '*receiverUserName'));
+    (SELECT offerId FROM Offers WHERE offerItem = '*item'), 
+    (SELECT personId FROM People WHERE personEmail = '*receiverUserName')),
+    *time;
 
 
 -- Update Operations
 
--- Update an individuals email, phone, or address if one is provided, otherwise maintain the current one
+-- Update an indivIduals information to new values
 UPDATE People
 SET 
-    personEmail = IsNull(*newEmail, '*updateUserName'),
-    personPhoneNumber = IsNull(*newNumber, (SELECT personPhoneNumber FROM People WHERE personEmail = '*updateUserName')),
-    personHouseholdId = IsNull(*newHousehold, (SELECT personHouseholdId FROM People WHERE personEmail = '*updateUserName'))
+    personName = *newName,
+    personEmail = *newEmail,
+    personPhoneNumber = *newNumber,
+    personHouseholdId = *newHousehold
+    personKarma = *newKarma
 WHERE
-    personID = (SELECT personId FROM People WHERE personEmail = '*updateUserName');
-
--- Update a transaction
-UPDATE Transactions
-SET
-    transactionOfferID = (SELECT offerID FROM Offers WHERE offerItem = '*newItem'),
-    transactionRecieverID = (SELECT personId FROM People WHERE personEmail = '*receiverUserName')
-WHERE
-    transactionId = *id;
+    personId = (SELECT personId FROM People WHERE personEmail = '*updateUserName');
 
 
 -- Delete Operations
 
--- Delete all transactions involving a particular offer
-DELETE FROM Transactions WHERE transactionOfferID = (SELECT offerID FROM Offers WHERE offerItem = '*itemVoided');
-
--- Delete all transactions involving a particular buyer
-DELETE FROM Transactions WHERE transactionReceiverID = (SELECT personId FROM People WHERE personEmail = '*personUserNameVoided');
-
--- Delete a particular transaction
-DELETE FROM Transactions WHERE 
-transactionOfferID = (SELECT offerID FROM Offers WHERE offerItem = '*itemVoided')
-AND transactionReceiverID = (SELECT personId FROM People WHERE personEmail = '*personUserNameVoided');
+-- Delete an Offer by name, cascade deletes transactions
+DELETE FROM Offers WHERE offerId = (SELECT offerId FROM Offers WHERE offerItem = '*itemName');

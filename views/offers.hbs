@@ -2,9 +2,6 @@
 Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
 at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 -->
-<div class="warning">
-    <p>Notice: Update buttons are not currently working.  User must reload page after adding a record.</p>
-</div>
 
 <table id="offer-table">
     <h2>Offers Table</h2>
@@ -15,7 +12,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
         know what each column means when the phousehold-zipcode renders --}}
         <tr>
             <th>Offer Id</th>
-            <th>Giver Id</th>
+            <th>Giver</th>
             <th>Item</th>
             <th>Description</th>
             <th>Quantity</th>
@@ -32,13 +29,13 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
         {{#each data}}
         <tr data-value={{this.id}}>
             <td>{{this.offerId}}</td>
-            <td>{{this.offerGiverId}}</td>
+            <td>{{this.giverEmail}}</td>
             <td>{{this.offerItem}}</td>
             <td>{{this.offerDescription}}</td>
             <td>{{this.offerQuantity}}</td>
             <td>{{this.offerCost}}</td>
             <td>{{this.offerTime}}</td>
-            <td>{{this.offerTypeId}}</td>
+            <td>{{this.offerType}}</td>
             <td><button onclick="deleteOffer({{this.offerId}})">Delete</button></td>
         </tr>
         {{/each}}
@@ -53,9 +50,9 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
     <label for="input-giver-id">Giver Id: </label>
     <div class="selection">
         <select name="input-giver-id" id="input-giver-id">
-            <option value="">Select a Giver Name</option>
+            <option value="">Select a persons username (email)</option>
             {{#each people}}
-            <option value="{{this.personId}}"> {{this.personName}}</option>
+            <option value="{{this.personId}}"> {{this.personEmail}}</option>
             {{/each}}
         </select>
     </div>

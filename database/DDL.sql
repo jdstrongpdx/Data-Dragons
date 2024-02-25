@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `Transactions` (
   `transactionReceiverId` INT NOT NULL,
   `transactionTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`transactionID`),
-  FOREIGN KEY (`transactionOfferID`) REFERENCES `Offers` (`offerId`),
+  FOREIGN KEY (`transactionOfferID`) REFERENCES `Offers` (`offerId`) ON DELETE CASCADE,
   FOREIGN KEY (`transactionReceiverID`) REFERENCES `People` (`personId`)
   );
 

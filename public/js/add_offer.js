@@ -47,7 +47,7 @@ addOfferForm.addEventListener("submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            // addRowToTable(xhttp.response);
+            addRowToTable(xhttp.response);
 
             // Clear the input fields for another transaction
             giverIdValue.value = '';
@@ -66,3 +66,55 @@ addOfferForm.addEventListener("submit", function (e) {
     xhttp.send(JSON.stringify(data));
 
 })
+
+
+// Creates a single row from an Object representing a single record from Offers
+addRowToTable = (data) => {
+
+    // Get a reference to the current table on the page and clear it out.
+    let currentTable = document.getElementById("offer-table");
+    let tbody = currentTable.getElementsByTagName("tbody")[0];
+
+    // Get the new data
+    let parsedData = JSON.parse(data);
+    let newRow = parsedData[parsedData.length - 1]
+
+    // Replace the content of the new row with the data we obtained
+    let row = document.createElement("TR");	   
+    let idCell = document.createElement("TD");
+    let giverIdcell = document.createElement("TD");
+    let itemCell = document.createElement("TD");
+    let descriptionCell = document.createElement("TD");
+    let quantityCell = document.createElement("TD");
+    let costCell = document.createElement("TD");
+    let timestampCell = document.createElement("TD");
+    let offerTypeCell = document.createElement("TD");
+    let deleteButton = document.createElement("TD");
+
+
+    // Fill the cells with correct data	
+    idCell.innerText = newRow.offerId;	
+    giverIdcell.innerText = newRow.giverEmail;	
+    itemCell.innerText = newRow.offerItem;	
+    descriptionCell.innerText = newRow.offerDescription;	
+    quantityCell.innerText = newRow.offerQuantity;	
+    costCell.innerText = newRow.offerCost;
+    timestampCell.innerText = newRow.offerTime;
+    offerTypeCell.innerText = newRow.offerType;
+    deleteButton.innerHTML = `<button onclick="deleteOffer(${newRow.offerId})">Delete</button>`;  
+    
+    // Add the cells to the row 	
+    row.appendChild(idCell);	
+    row.appendChild(giverIdcell);	
+    row.appendChild(itemCell);	
+    row.appendChild(descriptionCell);	
+    row.appendChild(quantityCell);	
+    row.appendChild(costCell);	
+    row.appendChild(timestampCell);
+    row.appendChild(offerTypeCell);
+    row.appendChild(deleteButton);
+
+    // Add the row to the table
+    tbody.appendChild(row);
+    tbody.lastChild.className('data-value');
+}

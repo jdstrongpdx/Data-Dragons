@@ -29,13 +29,18 @@ function deleteOffer(offerId) {
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
 }
-  
-  function deleteRow(personID){
-      let table = document.getElementById("transactions-table");
-      for (let i = 0, row; row = table.rows[i]; i++) {
-         if (table.rows[i].getAttribute("data-value") == offerId) {
-              table.deleteRow(i);
-              break;
-         }
-      }
-  }
+
+function deleteRow(offerId){
+
+    let table = document.getElementById("offer-table");
+    let tbody = table.getElementsByTagName("tbody")[0];
+
+    for (var i = 0; i < tbody.rows.length; i++) {
+        var row = tbody.rows[i];
+
+        if (row.cells[0].textContent == offerId) {
+            tbody.deleteRow(i);
+            break; 
+        }
+    }
+}
