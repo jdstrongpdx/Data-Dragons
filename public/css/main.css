@@ -244,7 +244,10 @@ h5, h6 {
     padding:1%;
     text-align: right;
   }
-  td {}
+  td {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
   td:nth-child(1) {}
 
   table img {
@@ -295,7 +298,8 @@ h5, h6 {
   button {
     font-size: 100%;
     color: var(--navy);
-    margin: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
     padding-left: 10%;
     padding-right: 10%;
     background-color: grey;
@@ -335,7 +339,7 @@ h5, h6 {
   meter {}
   progress {}
   
-  *:required {
+  input:required {
     border:2px solid green;
 }
 .address {
@@ -384,6 +388,7 @@ select {
   font-size: 110%;
   width:350px;
   margin: 2%;
+  border: none;
 }
 
 
