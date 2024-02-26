@@ -35,7 +35,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 
     <label for="input-transaction-offer-id">Offer Item: </label>
     <div class="selection">
-        <select name="input-transaction-offer-id" id="input-transaction-offer-id">
+        <select name="input-transaction-offer-id" id="input-transaction-offer-id" required>
             <option value="">Select a Offer</option>
             {{#each offers}}
             <option value="{{this.offerId}}"> {{this.offerItem}}</option>
@@ -45,7 +45,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 
     <label for="input-reciever-id">Reciever Name: </label>
     <div class="selection">
-        <select name="input-reciever-id" id="input-reciever-id">
+        <select name="input-reciever-id" id="input-reciever-id" required>
             <option value="">Select a persons username (email)</option>
             {{#each people}}
             <option value="{{this.personId}}"> {{this.personEmail}}</option>

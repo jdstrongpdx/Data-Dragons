@@ -6,9 +6,7 @@ start cmd: forever start app.js
 stop cmd: forever stop app.js
 
 NOTE: MUST BE LOGGED INTO VPN FOR FLIP LINK TO WORK
-url: http://flip2.engr.oregonstate.edu:39743/
-
-
+url: http://flip3.engr.oregonstate.edu:39746/
 
 Repository Link:
 https://github.com/jdstrongpdx/Data-Dragons

@@ -58,20 +58,20 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
     </div>
     
     <label for="input-item">Item: </label>
-    <input type="text" name="input-item" id="input-item">
+    <input type="text" name="input-item" id="input-item" required>
 
     <label for="input-description">Description: </label>
     <input type="textarea" name="input-description" id="input-description">
 
     <label for="input-quantity">Quantity: </label>
-    <input type="number" name="input-quantity" id="input-quantity">
+    <input type="number" name="input-quantity" id="input-quantity" value="1" required>
 
     <label for="input-cost">Karma Cost: </label>
-    <input type="number" name="input-cost" id="input-cost">
+    <input type="number" name="input-cost" id="input-cost" required>
 
     <label for="input-type-id">Offer Type: </label>
     <div class="selection">
-        <select name="input-type-id" id="input-type-id">
+        <select name="input-type-id" id="input-type-id" required>
             <option value="">Select a Offer Type</option>
                 {{#each offerTypes}}
                 <option value="{{this.offerTypeId}}"> {{this.offerType}}</option>
