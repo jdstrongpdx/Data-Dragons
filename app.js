@@ -39,14 +39,15 @@ app.get('/', function(req, res)
         })
     });
 
-app.get('/reset', function(req, res) {
-    db.sqlImporter.import('database/DDL.sql').then(()=>{
-        var files_imported = db.sqlImporter.getImported();
-        console.log(`${files_imported.length} SQL file(s) imported.`);
-      }).catch(err=>{
-        console.error(err);
-      });
-});
+app.get('/reset', function(req, res) 
+    {
+        db.sqlImporter.import('database/DDL.sql').then(()=>{
+            var files_imported = db.sqlImporter.getImported();
+            console.log(`${files_imported.length} SQL file(s) imported.`);
+        }).catch(err=>{
+            console.error(err);
+        });
+    });
 
 app.get('/people', function(req, res)
     {  
