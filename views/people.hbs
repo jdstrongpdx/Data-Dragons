@@ -38,19 +38,19 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 
 {{!-- Form to add a record to the table  --}}
 <h2>Add a Person</h2>
-<h4 class="centered">Ability to make Household Null by <br>selecting record to update <br> and using empty dropdown option.</h4>
+<h4 class="centered">People to Household relationship is NULLable</h4>
 <form id="add-person-form-ajax">
     
     <label for="input-id">Id (Read Only): </label>
     <input type="number" name="input-id" id="input-id" readonly="readonly">
 
-    <label for="input-name">Name: </label>
+    <label for="input-name">Name: *</label>
     <input type="text" name="input-name" id="input-name" required>
     
-    <label for="input-email">Email Address: </label>
+    <label for="input-email">Email Address: *</label>
     <input type="text" name="input-email" id="input-email" required>
 
-    <label for="input-phone-number">Phone Number: </label>
+    <label for="input-phone-number">Phone Number: *</label>
     <input type="text" name="input-phone-number" id="input-phone-number" required>
 
     <label for="input-household-id">Household: </label>
@@ -77,8 +77,8 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 
 <h2>Search By Name</h2>
 <form id="search-html" method='GET' action='/people'>
-    <label for="input-qname">Search by Name: </label>
-    <input type="text" name="qname" id="input-name-html-search">
+    <label for="input-qname">Search by Name: *</label>
+    <input type="text" name="qname" id="input-name-html-search" required>
     
     <input type="submit" value="Find People">
     <a href='/people'><button>Show All</button></a>
