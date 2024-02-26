@@ -64,7 +64,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
     </div>
 
         <label for="input-karma">Karma (Read Only): </label>
-    <input type="number" name="input-karma" id="input-karma" readonly="readonly">
+    <input type="number" name="input-karma" id="input-karma" readonly="readonly" min = "0">
     
     <input type="submit" value="Add/Edit Person">
 </form>
@@ -77,7 +77,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 <h2>Search By Name</h2>
 <form id="search-html" method='GET' action='/people'>
     <label for="input-qname">Search by Name: *</label>
-    <input type="text" name="qname" id="input-name-html-search" required>
+    <input type="text" placeholder = "First Last" name="qname" id="input-name-html-search" required>
     
     <input type="submit" value="Find People">
     <a href='/people'><button>Show All</button></a>
