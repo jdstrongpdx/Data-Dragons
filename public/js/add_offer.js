@@ -99,7 +99,11 @@ addRowToTable = (data) => {
     descriptionCell.innerText = newRow.offerDescription;	
     quantityCell.innerText = newRow.offerQuantity;	
     costCell.innerText = newRow.offerCost;
-    timestampCell.innerText = newRow.offerTime;
+
+    // Format the timestamp
+    const dateObject = new Date(newRow.offerTime);
+    const formattedDate = dateObject.toLocaleString();
+    timestampCell.innerText =formattedDate;
     offerTypeCell.innerText = newRow.offerType;
     deleteButton.innerHTML = `<button onclick="deleteOffer(${newRow.offerId})">Delete</button>`;  
     

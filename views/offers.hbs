@@ -34,7 +34,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
             <td>{{this.offerDescription}}</td>
             <td>{{this.offerQuantity}}</td>
             <td>{{this.offerCost}}</td>
-            <td>{{this.offerTime}}</td>
+            <td>{{formatDate this.offerTime}}</td>
             <td>{{this.offerType}}</td>
             <td><button onclick="deleteOffer({{this.offerId}})">Delete</button></td>
         </tr>

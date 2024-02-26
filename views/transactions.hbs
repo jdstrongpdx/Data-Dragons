@@ -23,7 +23,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
             <td>{{this.transactionId}}</td>
             <td>{{this.item}}</td>
             <td>{{this.receiver}}</td>
-            <td>{{this.transactionTime}}</td>
+            <td>{{formatDate this.transactionTime}}</td>
         </tr>
         {{/each}}
     </tbody>

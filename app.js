@@ -23,6 +23,10 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
+var hbs = exphbs.create({});
+hbs.handlebars.registerHelper('formatDate', function(date) {
+    return date.toLocaleString();
+  })
 
 /*
     ROUTES -- GET

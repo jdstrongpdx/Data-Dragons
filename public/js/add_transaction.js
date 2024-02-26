@@ -74,7 +74,11 @@ addRowToTable = (data) => {
     idCell.innerText = newRow.transactionId;	
     offerIdCell.innerText = newRow.item;	
     receieverIdCell.innerText = newRow.receiver;	
-    timeStamp.innerText = newRow.transactionTime;	
+
+    // Format the timestamp correctly
+    const dateObject = new Date(newRow.transactionTime);
+    const formattedDate = dateObject.toLocaleString();
+    timeStamp.innerText = formattedDate
 
     // Add the cells to the row 	
     row.appendChild(idCell);	
