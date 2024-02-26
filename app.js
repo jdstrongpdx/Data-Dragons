@@ -10,7 +10,6 @@ var db = require('./database/db-connector')
     SETUP
 */
 
-
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
 
@@ -23,6 +22,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
+// Declare handlerbars helpers 
 var hbs = exphbs.create({});
 hbs.handlebars.registerHelper('formatDate', function(date) {
     return date.toLocaleString();
@@ -38,6 +38,15 @@ app.get('/', function(req, res)
         res.render('index', {data: rows});
         })
     });
+
+app.get('/reset', function(req, res) {
+    db.sqlImporter.import('database/DDL.sql').then(()=>{
+        var files_imported = db.sqlImporter.getImported();
+        console.log(`${files_imported.length} SQL file(s) imported.`);
+      }).catch(err=>{
+        console.error(err);
+      });
+});
 
 app.get('/people', function(req, res)
     {  
