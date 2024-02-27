@@ -38,7 +38,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 <script src="./js/update_person.js"></script>
 
 {{!-- Form to add a record to the table  --}}
-<h2>Add or Edit a Person</h2>
+<h2 id="people-form">Add or Edit a Person</h2>
 <h4 class="centered">
     People to Household relationship is NULLable. <br>
     If an ID is present in the form, UPDATE will be executed. <br>
@@ -73,6 +73,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
     <input type="number" name="input-karma" id="input-karma" min = "0" value="100" required>
     
     <input type="submit" value="Add/Edit Person">
+    <input type="reset" value="Reset Form">
 </form>
 
 

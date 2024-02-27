@@ -311,7 +311,7 @@ h5, h6 {
     width: 50%;
   }
 
-  input[type=submit] {
+  input[type=submit], input[type=reset] {
     font-size: 120%;
     font-weight: 600;
     color: var(--navy);
@@ -320,6 +320,11 @@ h5, h6 {
     padding-right: 10%;
     background-color: grey;
     border-radius: 5px;
+  }
+
+  input[type=reset]{
+    background-color: var(--navy);
+    color: grey;
   }
 
   select {    

@@ -68,13 +68,7 @@ addPersonForm.addEventListener("submit", function (e) {
             }
 
             // Clear the input fields for another transaction
-            inputId.value = '';
-            inputName.value = '';
-            inputEmail.value = '';
-            inputPhoneNumber.value = '';
-            inputHouseholdId.value = '';
-            inputKarma.value = '';
-
+            addPersonForm.reset();
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
