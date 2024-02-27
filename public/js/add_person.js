@@ -28,18 +28,6 @@ addPersonForm.addEventListener("submit", function (e) {
     let karmaValue = parseInt(inputKarma.value);
 
     // Put our data we want to send in a javascript object
-<<<<<<< Updated upstream
-    let data = {
-        name: nameValue,
-        email: emailValue,
-        phoneNumber: phoneNumberValue,
-        householdId: householdIdValue,
-        karma: karmaValue
-    }
-    
-    // Setup our AJAX request
-=======
->>>>>>> Stashed changes
     var xhttp = new XMLHttpRequest();
 
     if ( isNaN(inputIdValue) ) {

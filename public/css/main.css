@@ -328,7 +328,9 @@ h5, h6 {
   }
 }
   optgroup {}
-  option {}
+  option {
+    width: 50%;
+  }
 
   input[type=textarea] {
     padding: 1%;
@@ -380,6 +382,7 @@ h5, h6 {
   font-size: 100%;
   background-color: var(--color-cream);
   margin-bottom: 1%;
+  width: 50%;
   border:2px solid green;
 }
 
