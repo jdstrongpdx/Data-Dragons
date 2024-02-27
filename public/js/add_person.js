@@ -69,6 +69,7 @@ addPersonForm.addEventListener("submit", function (e) {
 
             // Clear the input fields for another transaction
             addPersonForm.reset();
+            window.scrollTo(0, document.getElementById("people-table").offsetTop);
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")

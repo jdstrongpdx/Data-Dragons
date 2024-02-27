@@ -3,10 +3,10 @@
 // at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 
 // Get the objects we need to modify
-let addNeighborhoodForm = document.getElementById('add-offer-type-form-ajax');
+let addOfferTypeForm = document.getElementById('add-offer-type-form-ajax');
 
 // Modify the objects we need
-addNeighborhoodForm.addEventListener("submit", function (e) {
+addOfferTypeForm.addEventListener("submit", function (e) {
     
     // Prevent the form from submitting
     e.preventDefault();
@@ -35,7 +35,8 @@ addNeighborhoodForm.addEventListener("submit", function (e) {
             addRowToTable(xhttp.response);
 
             // Clear the input fields for another transaction
-            inputName.value = '';
+            addOfferTypeForm.reset();
+            window.scrollTo(0, document.getElementById("offer-type-table").offsetTop);
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
