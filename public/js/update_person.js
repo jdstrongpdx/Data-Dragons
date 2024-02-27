@@ -35,4 +35,5 @@ function updatePerson(personID) {
             break;
         }
     }
+    window.scrollTo(0, document.getElementById("people-form").offsetTop);
 }
