@@ -212,7 +212,7 @@ app.post('/add-person-ajax', function(req, res)
     }
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO People (personName, personEmail, personPhoneNumber, personHouseholdId) VALUES ('${data.name}', '${data.email}', '${data.phoneNumber}', ${data.householdId})`;
+    query1 = `INSERT INTO People (personName, personEmail, personPhoneNumber, personHouseholdId, personKarma) VALUES ('${data.name}', '${data.email}', '${data.phoneNumber}', ${data.householdId}, ${data.karma})`;
     db.pool.query(query1, function(error, rows, fields){
 
         // Check to see if there was an error

@@ -17,6 +17,7 @@ addPersonForm.addEventListener("submit", function (e) {
     let inputEmail = document.getElementById("input-email");
     let inputPhoneNumber = document.getElementById("input-phone-number");
     let inputHouseholdId = document.getElementById("input-household-id");
+    let inputKarma = document.getElementById("input-karma");
 
     // Get the values from the form fields
     let inputIdValue = parseInt(inputId.value);
@@ -24,6 +25,7 @@ addPersonForm.addEventListener("submit", function (e) {
     let emailValue = String(inputEmail.value);
     let phoneNumberValue = String(inputPhoneNumber.value);
     let householdIdValue = parseInt(inputHouseholdId.value);
+    let karmaValue = parseInt(inputKarma.value);
 
     // Put our data we want to send in a javascript object
 <<<<<<< Updated upstream
@@ -31,7 +33,8 @@ addPersonForm.addEventListener("submit", function (e) {
         name: nameValue,
         email: emailValue,
         phoneNumber: phoneNumberValue,
-        householdId: householdIdValue
+        householdId: householdIdValue,
+        karma: karmaValue
     }
     
     // Setup our AJAX request
@@ -82,6 +85,7 @@ addPersonForm.addEventListener("submit", function (e) {
             inputEmail.value = '';
             inputPhoneNumber.value = '';
             inputHouseholdId.value = '';
+            inputKarma.value = '';
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
