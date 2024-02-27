@@ -114,6 +114,17 @@
   }
   a:active {}
   a:visited {}
+
+  #show-all {
+    font-size: 120%;
+    font-weight: 600;
+    margin: 5px;
+    padding-left: 10%;
+    padding-right: 10%;
+    border-radius: 5px;
+    background-color: var(--navy);
+    color: grey;
+  }
   
   /*  ----- Navigation ----- Override text links for navigation only.  */
   nav {
