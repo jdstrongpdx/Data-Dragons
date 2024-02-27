@@ -214,6 +214,8 @@ h5, h6 {
     border: 2px solid var(--navy);
     margin-bottom: 2%;
     width: 100%;
+    text-align:center;
+    padding: auto;
   }
   caption {
     color:var(--navy);
@@ -221,12 +223,10 @@ h5, h6 {
     padding:1% 0;
   }
   thead {
-
     color: var(--color-cream);
     background-color:  var(--navy);
   }
   tbody {
-    text-align:right;
   }
   tfoot {}
   tr, td {
@@ -235,14 +235,10 @@ h5, h6 {
     tr:nth-child(even) {
       background-color:  var(--color-grey-blue);
     }
-
-
   tr {
 
   }
   th {
-    padding:1%;
-    text-align: right;
   }
   td {
     padding-left: 10px;
