@@ -387,6 +387,10 @@ h5, h6 {
   border:2px solid green;
 }
 
+.optional {
+  border: None;
+}
+
 select {
   border: 0;
   background:transparent;
