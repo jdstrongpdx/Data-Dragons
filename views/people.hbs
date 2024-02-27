@@ -6,7 +6,6 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 <table id="people-table">
 
     <h2>People Table</h2>
-    <h4 class="centered">Click Update to populate form below </h4>
     {{!-- Header section --}}
     <thead>
         <tr>
@@ -40,9 +39,12 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 
 {{!-- Form to add a record to the table  --}}
 <h2>Add or Edit a Person</h2>
-<h4 class="centered">People to Household relationship is NULLable</h4>
-<h4 class="centered">If an ID is present in form below, UPDATE will be executed </h4>
-<h4 class="centered">If no ID is present in form below, INSERT will be executed </h4>
+<h4 class="centered">
+    People to Household relationship is NULLable <br>
+    If an ID is present in form below, UPDATE will be executed <br>
+    If no ID is present in form below, INSERT will be executed <br>
+    ID can be added to form below by clicking "Update" on a row above
+</h4>
 <form id="add-person-form-ajax">
     
     <label for="input-id">Id (Read Only): </label>
@@ -84,5 +86,5 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
     <input type="text" placeholder = "First Last" name="qname" id="input-name-html-search" required>
     
     <input type="submit" value="Find People">
-    <a href='/people'><button>Show All</button></a>
+    <a href='/people'><button type="button">Show All</button></a>
 </form>
