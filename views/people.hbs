@@ -6,6 +6,7 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
 <table id="people-table">
 
     <h2>People Table</h2>
+    <h4 class="centered">Click Update to populate form below </h4>
     {{!-- Header section --}}
     <thead>
         <tr>
@@ -30,15 +31,18 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
             <td>{{this.personPhoneNumber}}</td>
             <td>{{this.fullAddress}}</td>
             <td>{{this.personKarma}}</td>
-            <td><button onclick="loadPerson({{this.id}})">Update</button></td>
+            <td><button onclick="updatePerson({{this.personId}})">Update</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+<script src="./js/update_person.js"></script>
 
 {{!-- Form to add a record to the table  --}}
-<h2>Add a Person</h2>
+<h2>Add or Edit a Person</h2>
 <h4 class="centered">People to Household relationship is NULLable</h4>
+<h4 class="centered">If an ID is present in form below, UPDATE will be executed </h4>
+<h4 class="centered">If no ID is present in form below, INSERT will be executed </h4>
 <form id="add-person-form-ajax">
     
     <label for="input-id">Id (Read Only): </label>
@@ -58,13 +62,13 @@ at https://github.com/osu-cs340-ecampus/nodejs-starter-app
         <select name="input-household-id" id="input-household-id">
             <option value="">Optionally select a Household</option>
                 {{#each households}}
-                <option value="{{this.householdId}}"> {{this.householdAddress}}</option>
+                <option value="{{this.householdId}}"> {{this.fullAddress}}</option>
                 {{/each}}
         </select>
     </div>
 
-        <label for="input-karma">Karma (Read Only): </label>
-    <input type="number" name="input-karma" id="input-karma" readonly="readonly" min = "0">
+    <label for="input-karma">Karma: </label>
+    <input type="number" name="input-karma" id="input-karma" min = "0" value="100">
     
     <input type="submit" value="Add/Edit Person">
 </form>

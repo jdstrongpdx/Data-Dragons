@@ -324,9 +324,13 @@ h5, h6 {
     border-radius: 5px;
   }
 
-  select {}
-    optgroup {}
-    option {}
+  select {    
+    required {
+    border:2px solid green;
+  }
+}
+  optgroup {}
+  option {}
 
   input[type=textarea] {
     padding: 1%;
@@ -378,7 +382,11 @@ h5, h6 {
   font-size: 100%;
   background-color: var(--color-cream);
   margin-bottom: 1%;
-  border: 1px solid grey;
+  border:2px solid green;
+}
+
+.optional {
+  border: None;
 }
 
 select {
@@ -386,7 +394,7 @@ select {
   background:transparent;
   height:25px;
   font-size: 110%;
-  width:350px;
+  width: 97%;
   margin: 2%;
   border: none;
 }
