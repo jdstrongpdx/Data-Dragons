@@ -39,6 +39,11 @@ app.get('/', function(req, res)
         })
     });
 
+/* Citation for the code for the reset route:
+   Date: 2/28/24
+   Based on mysql-import documentation:
+   Source URL: https://github.com/Pamblam/mysql-import/
+*/ 
 app.get('/reset', function(req, res) 
     {
         db.sqlImporter.import('database/DDL.sql').then(()=>{
@@ -47,6 +52,7 @@ app.get('/reset', function(req, res)
         }).catch(err=>{
             console.error(err);
         });
+        res.render('index');
     });
 
 app.get('/people', function(req, res)
