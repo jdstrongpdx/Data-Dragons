@@ -24,6 +24,8 @@ function deleteOffer(offerId) {
         }
         else if (xhttp.readyState == 4 && xhttp.status != 204) {
             console.log("There was an error with the input.")
+            var errorMsg = JSON.parse(xhttp.response);
+            alert(errorMsg.sqlMessage)
         }
     }
     // Send the request and wait for the response

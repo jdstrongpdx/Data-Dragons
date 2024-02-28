@@ -30,6 +30,7 @@ addPersonForm.addEventListener("submit", function (e) {
     // Put our data we want to send in a javascript object
     var xhttp = new XMLHttpRequest();
 
+
     if ( isNaN(inputIdValue) ) {
         data = {
             name: nameValue,
@@ -73,6 +74,8 @@ addPersonForm.addEventListener("submit", function (e) {
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
+            var errorMsg = JSON.parse(xhttp.response);
+            alert(errorMsg.sqlMessage)
         }
     }
 
