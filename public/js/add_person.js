@@ -1,6 +1,9 @@
-
-// Starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
-// at https://github.com/osu-cs340-ecampus/nodejs-starter-app
+/* Citation for the following function:
+   Date: 2/14/24
+   Adapted from starter code provided by Dr. Curry and Prof. Safonte at Oregon State University
+   Starter code used as a template with variables changed to meet our use case.  Some functions/routes were added/removed for functionality.
+   Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+*/ 
 
 // Get the objects we need to modify
 let addPersonForm = document.getElementById('add-person-form-ajax');
