@@ -289,8 +289,8 @@ app.post('/update-person-ajax', function(req, res)
         if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.status(400).send(error);;
+            console.log(error);
+            res.status(400).send(error);
         }
         else
         {
@@ -309,7 +309,7 @@ app.post('/update-person-ajax', function(req, res)
                     
                     // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
                     console.log(error);
-                    res.status(400).send(error);;
+                    res.status(400).send(error);
                 }
                 // If all went well, send the results of the query back.
                 else
@@ -362,7 +362,7 @@ app.post('/add-household-ajax', function(req, res)
                     
                     // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
                     console.log(error);
-                    res.status(400).send(error);;
+                    res.status(400).send(error);
                 }
                 // If all went well, send the results of the query back.
                 else
@@ -388,8 +388,8 @@ app.post('/add-neighborhood-ajax', function(req, res)
         if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.status(400).send(error);;
+            console.log(error);
+            res.status(400).send(error);
         }
         else
         {
@@ -402,7 +402,7 @@ app.post('/add-neighborhood-ajax', function(req, res)
                     
                     // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
                     console.log(error);
-                    res.status(400).send(error);;
+                    res.status(400).send(error);
                 }
                 // If all went well, send the results of the query back.
                 else
@@ -421,15 +421,15 @@ app.post('/add-offer-ajax', function(req, res)
     let data = req.body;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Offers (offerGiverId, offerItem, offerDescription, offerQuantity, offerCost, offerTypeId) VALUES (?, ?, ?, ? ,? ,?)`;
+    query1 = `INSERT INTO Offers (offerGiverId, offerItem, offerDescription, offerQuantity, offerCost, offerTypeId) VALUES (?, ?, ?, ?, ?, ?)`;
     db.pool.query(query1, [data.giverId, data.item, data.description, data.quantity, data.cost, data.typeId], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.status(400).send(error);;
+            console.log(error);
+            res.status(400).send(error);
         }
         else
         {
@@ -448,7 +448,7 @@ app.post('/add-offer-ajax', function(req, res)
                     
                     // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
                     console.log(error);
-                    res.status(400).send(error);;
+                    res.status(400).send(error);
                 }
                 // If all went well, send the results of the query back.
                 else
@@ -475,7 +475,7 @@ app.post('/add-offer-type-ajax', function(req, res)
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
             console.log(error)
-            res.status(400).send(error);;
+            res.status(400).send(error);
         }
         {
             // If there was no error, retrieve the new table state
@@ -517,8 +517,8 @@ app.post('/add-transaction-ajax', function(req, res)
         if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.status(400).send(error);;
+            console.log(error);
+            res.status(400).send(error);
         }
         {
             // If there was no error, retrieve the new table state
@@ -537,7 +537,7 @@ app.post('/add-transaction-ajax', function(req, res)
                     
                     // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
                     console.log(error);
-                    res.status(400).send(error);;
+                    res.status(400).send(error);
                 }
                 // If all went well, send the results of the query back.
                 else
@@ -550,7 +550,7 @@ app.post('/add-transaction-ajax', function(req, res)
     })
 });
 
-app.delete('/delete-offer-ajax/', function(req,res,next){
+app.delete('/delete-offer-ajax/', function(req, res, next){
     let data = req.body;
     let offerId = parseInt(data.id);
     let deleteOffer = `DELETE FROM Offers WHERE offerId = ?`;
@@ -560,7 +560,7 @@ app.delete('/delete-offer-ajax/', function(req,res,next){
 
         // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
         console.log(error);
-        res.status(400).send(error);;
+        res.status(400).send(error);
         }
 
         else
