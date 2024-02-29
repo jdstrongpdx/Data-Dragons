@@ -67,10 +67,10 @@ Citation for the following function:
     <input type="textarea" placeholder = "Describe the thing being offered" name="input-description" id="input-description">
 
     <label for="input-quantity">Quantity: *</label>
-    <input type="number" name="input-quantity" id="input-quantity" value="1" required>
+    <input type="number" name="input-quantity" id="input-quantity" min = "1" max = "99999" value="1" required>
 
     <label for="input-cost">Karma Cost: *</label>
-    <input type="number" name="input-cost" id="input-cost" required min = "0">
+    <input type="number" name="input-cost" id="input-cost" required min = "0" max = "99999">
 
     <label for="input-type-id">Offer Type: *</label>
     <div class="selection">
