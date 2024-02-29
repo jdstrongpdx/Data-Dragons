@@ -219,8 +219,8 @@ app.post('/add-person-ajax', function(req, res)
     }
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO People (personName, personEmail, personPhoneNumber, personHouseholdId, personKarma) VALUES ('${data.name}', '${data.email}', '${data.phoneNumber}', ${data.householdId}, ${data.karma})`;
-    db.pool.query(query1, function(error, rows, fields){
+    query1 = `INSERT INTO People (personName, personEmail, personPhoneNumber, personHouseholdId, personKarma) VALUES (?, ?, ?, ?, ?)`;
+    db.pool.query(query1, [data.name, data.email, data.phoneNumber, data.householdId, data.karma], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
@@ -275,15 +275,15 @@ app.post('/update-person-ajax', function(req, res)
     query1 = `
     UPDATE People 
     SET 
-        personName = '${data.name}', 
-        personEmail = '${data.email}', 
-        personPhoneNumber = '${data.phoneNumber}', 
-        personHouseholdId = ${data.householdId}, 
-        personKarma = ${data.karma} 
+        personName = ?, 
+        personEmail = ?, 
+        personPhoneNumber = ?, 
+        personHouseholdId = ?, 
+        personKarma = ? 
     WHERE 
-        personId = ${data.id};`;
+        personId = ?;`;
     
-    db.pool.query(query1, function(error, rows, fields){
+    db.pool.query(query1, [data.name, data.email, data.phoneNumber, data.householdId, data.karma, data.id], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
@@ -300,9 +300,9 @@ app.post('/update-person-ajax', function(req, res)
             SELECT personId, personName, personEmail, personPhoneNumber, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress, personKarma 
             FROM People
             LEFT JOIN Households ON personHouseholdID = householdID
-            WHERE personID = ${data.id};
+            WHERE personID = ?;
             `;
-            db.pool.query(query2, function(error, rows, fields){
+            db.pool.query(query2, [data.id], function(error, rows, fields){
 
                 // If there was an error on the second query, send a 400
                 if (error) {
@@ -336,15 +336,15 @@ app.post('/add-household-ajax', function(req, res)
     }
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Households (householdAddress, householdCity, householdState, householdZipcode, householdNeighborhoodId) VALUES ('${data.address}', '${data.city}', '${data.state}', '${data.zipCode}', '${data.neighborhoodId}')`;
-    db.pool.query(query1, function(error, rows, fields){
+    query1 = `INSERT INTO Households (householdAddress, householdCity, householdState, householdZipcode, householdNeighborhoodId) VALUES (?, ?, ?, ?, ?)`;
+    db.pool.query(query1, [data.address, data.city, data.state, data.zipCode, data.neighborhoodId], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.status(400).send(error);;
+            console.log(error);
+            res.status(400).send(error);
         }
         else
         {
@@ -381,8 +381,8 @@ app.post('/add-neighborhood-ajax', function(req, res)
     let data = req.body;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Neighborhoods (neighborhoodName) VALUES ('${data.name}')`;
-    db.pool.query(query1, function(error, rows, fields){
+    query1 = `INSERT INTO Neighborhoods (neighborhoodName) VALUES (?)`;
+    db.pool.query(query1, [data.name], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
@@ -421,8 +421,8 @@ app.post('/add-offer-ajax', function(req, res)
     let data = req.body;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Offers (offerGiverId, offerItem, offerDescription, offerQuantity, offerCost, offerTypeId) VALUES ('${data.giverId}', '${data.item}', '${data.description}', '${data.quantity}', '${data.cost}', '${data.typeId}')`;
-    db.pool.query(query1, function(error, rows, fields){
+    query1 = `INSERT INTO Offers (offerGiverId, offerItem, offerDescription, offerQuantity, offerCost, offerTypeId) VALUES (?, ?, ?, ? ,? ,?)`;
+    db.pool.query(query1, [data.giverId, data.item, data.description, data.quantity, data.cost, data.typeId], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
@@ -467,8 +467,8 @@ app.post('/add-offer-type-ajax', function(req, res)
     let data = req.body;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO OfferTypes (offerType) VALUES ('${data.offerType}')`;
-    db.pool.query(query1, function(error, rows, fields){
+    query1 = `INSERT INTO OfferTypes (offerType) VALUES (?)`;
+    db.pool.query(query1, [data.offerType], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
@@ -510,8 +510,8 @@ app.post('/add-transaction-ajax', function(req, res)
     let recieverId = data.recieverId;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Transactions (transactionOfferID, transactionReceiverID) VALUES ('${data.offerId}', '${data.recieverId}')`;
-    db.pool.query(query1, function(error, rows, fields){
+    query1 = `INSERT INTO Transactions (transactionOfferID, transactionReceiverID) VALUES (?, ?)`;
+    db.pool.query(query1, [data.offerId, data.recieverId], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
