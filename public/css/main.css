@@ -253,6 +253,11 @@ h5, h6 {
   tr {
 
   }
+
+  tr.highlight{
+    background-color: rgb(135, 205, 228);
+  }
+
   th {
   }
   td {

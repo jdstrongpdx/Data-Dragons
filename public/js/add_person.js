@@ -129,7 +129,7 @@ addRowToTable = (data) => {
     row.appendChild(editButton);
 
     // Add the row to the table
-    tbody.appendChild(row);
+    tbody.appendChild(row);   
 }
 
 updateRowInTable = (data) => {
@@ -151,7 +151,10 @@ updateRowInTable = (data) => {
             row.cells[3].innerText = updateRow.personPhoneNumber;
             row.cells[4].innerText = updateRow.fullAddress;
             row.cells[5].innerText = updateRow.personKarma;
-            break;
+            row.classList.add('highlight');
+        }
+        else {
+            row.classList.remove('highlight');
         }
     };
 }
