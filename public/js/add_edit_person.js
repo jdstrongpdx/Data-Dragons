@@ -103,7 +103,7 @@ addRowToTable = (data) => {
     phoneNumberCell.innerText = newRow.personPhoneNumber;	
     householdIdCell.innerText = newRow.fullAddress;	
     karmaIdCell.innerText = newRow.personKarma;
-    editButton.innerHTML = `<button onclick="updatePerson(${newRow.personId})">Update</button>`;  
+    editButton.innerHTML = `<button onclick="populateUpdateForm(${newRow.personId})">Update</button>`;  
     
     // Add the cells to the row 	
     row.appendChild(idCell);	
@@ -152,7 +152,7 @@ updateRowInTable = (data) => {
     };
 }
 
-function updatePerson(personID) {
+function populateUpdateForm(personID) {
     let table = document.getElementById("people-table");
     let tbody = table.getElementsByTagName("tbody")[0];
 
