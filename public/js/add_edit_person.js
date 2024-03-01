@@ -114,8 +114,15 @@ addRowToTable = (data) => {
     row.appendChild(karmaIdCell);
     row.appendChild(editButton);
 
-    // Add the row to the table
+    // Unhighlight all rows 
+    for (var i = 0; i < currentTable.rows.length; i++) {
+        currentTable.rows[i].classList.remove("highlight");
+    }
+    
+    // Highlight the target row
+    row.classList.add('highlight');
     tbody.appendChild(row);   
+
 }
 
 updateRowInTable = (data) => {
@@ -143,4 +150,50 @@ updateRowInTable = (data) => {
             row.classList.remove('highlight');
         }
     };
+}
+
+function updatePerson(personID) {
+    let table = document.getElementById("people-table");
+    let tbody = table.getElementsByTagName("tbody")[0];
+
+    for (var i = 0; i < tbody.rows.length; i++) {
+        var row = tbody.rows[i];
+
+        // Find the row we want to modify
+        if (row.cells[0].textContent == personID) {
+            let inputId = document.getElementById("input-id");
+            let inputName = document.getElementById("input-name");
+            let inputEmail = document.getElementById("input-email");
+            let inputPhoneNumber = document.getElementById("input-phone-number");
+            let inputHouseholdId = document.getElementById("input-household-id");
+            let inputKarma = document.getElementById("input-karma");
+
+            inputId.value = row.cells[0].innerText;
+            inputName.value = row.cells[1].innerText
+            inputEmail.value = row.cells[2].innerText
+            inputPhoneNumber.value = row.cells[3].innerText
+
+            inputHouseholdId.selectedIndex = 0;
+            for (var i = 0; i < inputHouseholdId.options.length; i++) {
+                if ( inputHouseholdId.options[i].text == row.cells[4].innerText ) {
+                    inputHouseholdId.selectedIndex = i;
+                    break;
+                }
+            }
+            inputKarma.value = row.cells[5].innerText
+            break;
+        }
+    }
+    window.scrollTo(0, document.getElementById("people-form").offsetTop);
+    document.getElementById('people-form').innerText = 'Edit a Person';
+    document.getElementById('submit-button').value = 'Edit Person';
+    document.getElementById("input-id").classList.remove('hidden');
+    document.getElementById("input-id-text").classList.remove('hidden');
+}
+
+function resetButton() {
+    document.getElementById('people-form').innerText = 'Add a Person';
+    document.getElementById('submit-button').value = 'Add Person';
+    document.getElementById("input-id-text").classList.add('hidden');
+    document.getElementById("input-id").classList.add('hidden');
 }

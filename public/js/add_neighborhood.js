@@ -73,6 +73,12 @@ addRowToTable = (data) => {
     row.appendChild(idCell);	
     row.appendChild(nameCell);	
  
-    // Add the row to the table
-    tbody.appendChild(row);
+    // Unhighlight all rows 
+    for (var i = 0; i < currentTable.rows.length; i++) {
+        currentTable.rows[i].classList.remove("highlight");
+    }
+    
+    // Highlight the target row
+    row.classList.add('highlight');
+    tbody.appendChild(row);   
  }
