@@ -38,9 +38,16 @@ function updatePerson(personID) {
         }
     }
     window.scrollTo(0, document.getElementById("people-form").offsetTop);
-    document.getElementById('submit-button').value = 'Edit person';
+    document.getElementById('people-form').innerText = 'Edit a Person';
+    document.getElementById('submit-button').value = 'Edit Person';
+    document.getElementById("input-id").classList.remove('hidden');
+    document.getElementById("input-id-text").classList.remove('hidden');
 }
 
 function resetButton() {
-    document.getElementById('submit-button').value = 'Add person';
+    document.getElementById('people-form').innerText = 'Add a Person';
+    document.getElementById('submit-button').value = 'Add Person';
+    document.getElementById("input-id-text").classList.add('hidden');
+    document.getElementById("input-id").classList.add('hidden');
+
 }

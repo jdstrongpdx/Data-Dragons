@@ -313,6 +313,12 @@ h5, h6 {
     color: var(--color-dark-brown);
     font-size: 120%;
   }
+
+  .hidden {
+    display: none;
+    visibility: hidden;
+  }
+
   button {
     font-size: 100%;
     color: var(--navy);

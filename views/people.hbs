@@ -41,17 +41,14 @@ Citation for the following function:
 <script src="./js/update_person.js"></script>
 
 {{!-- Form to add a record to the table  --}}
-<h2 id="people-form">Add or Edit a Person</h2>
+<h2 id="people-form">Add a Person</h2>
 <h4 class="centered">
     People to Household relationship is NULLable. <br>
-    If an ID is present in the form, UPDATE will be executed. <br>
-    If no ID is present in the form, INSERT will be executed. <br>
-    ID can only be added to the form by clicking "Update" on a row above.
 </h4>
 <form id="add-person-form-ajax">
     
-    <label for="input-id">Id (Read Only): </label>
-    <input type="number" name="input-id" id="input-id" readonly="readonly" disabled>
+    <label id="input-id-text" class="hidden" for="input-id">Id (Read Only): </label>
+    <input type="number" class="hidden" name="input-id" id="input-id" readonly="readonly" disabled>
 
     <label for="input-name">Name: *</label>
     <input type="text" placeholder = "First Last" name="input-name" id="input-name" required>
