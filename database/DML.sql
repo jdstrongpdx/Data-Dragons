@@ -38,7 +38,7 @@ INNER JOIN OfferTypes ON Offers.offerTypeId = OfferTypes.offerTypeId
 ORDER BY offerId;
 
 -- Get table of transaction with item name, person email instead of giverId and receiverId
-SELECT transactionId, offerItem as item, g.personName as giver, r.personName as receiver, transactionTime 
+SELECT transactionId, offerItem as item, g.personEmail as giver, r.personEmail as receiver, transactionTime 
 FROM Transactions
 INNER JOIN Offers ON transactionOfferId = offerId
 INNER JOIN People AS g ON g.personId = offerGiverId
