@@ -34,9 +34,13 @@ function updatePerson(personID) {
                 }
             }
             inputKarma.value = row.cells[5].innerText
-
             break;
         }
     }
     window.scrollTo(0, document.getElementById("people-form").offsetTop);
+    document.getElementById('submit-button').value = 'Edit person';
+}
+
+function resetButton() {
+    document.getElementById('submit-button').value = 'Add person';
 }
