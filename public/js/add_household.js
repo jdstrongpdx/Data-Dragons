@@ -15,27 +15,13 @@ addHouseholdForm.addEventListener("submit", function (e) {
     // Prevent the form from submitting
     e.preventDefault();
 
-    // Get form fields we need to get data from
-    let inputAddress = document.getElementById("input-address");
-    let inputCity = document.getElementById("input-city");
-    let inputState = document.getElementById("input-state");
-    let inputZipCode = document.getElementById("input-zipcode");
-    let inputNeighborhoodId = document.getElementById("input-neighborhood-id");
-
-    // Get the values from the form fields
-    let addressValue = inputAddress.value;
-    let cityValue = inputCity.value;
-    let stateValue = inputState.value;
-    let zipCodeValue = inputZipCode.value;
-    let neighborhoodIdValue = inputNeighborhoodId.value;
-
     // Put our data we want to send in a javascript object
     let data = {
-        address: addressValue,
-        city: cityValue,
-        state: stateValue,
-        zipCode: zipCodeValue,
-        neighborhoodId: neighborhoodIdValue
+        address: document.getElementById("input-address").value,
+        city: document.getElementById("input-city").value,
+        state: document.getElementById("input-state").value,
+        zipCode: document.getElementById("input-zipcode").value,
+        neighborhoodId: document.getElementById("input-neighborhood-id").value
     }
     
     // Setup our AJAX request

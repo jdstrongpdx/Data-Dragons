@@ -14,15 +14,9 @@ addNeighborhoodForm.addEventListener("submit", function (e) {
     // Prevent the form from submitting
     e.preventDefault();
 
-    // Get form fields we need to get data from
-    let inputName = document.getElementById("input-name");
-
-    // Get the values from the form fields
-    let nameValue = inputName.value;
-
     // Put our data we want to send in a javascript object
     let data = {
-        name: nameValue
+        name: document.getElementById("input-name").value
     }
     
     // Setup our AJAX request

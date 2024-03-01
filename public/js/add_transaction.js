@@ -14,18 +14,10 @@ addTransactionForm.addEventListener("submit", function (e) {
     // Prevent the form from submitting
     e.preventDefault();
 
-    // Get form fields we need to get data from
-    let inputOffer = document.getElementById("input-transaction-offer-id");
-    let inputReciever = document.getElementById("input-reciever-id");
-
-    // Get the values from the form fields
-    let offerValue = inputOffer.value;
-    let recieverValue = inputReciever.value;
-
     // Put our data we want to send in a javascript object
     let data = {
-        offerId: offerValue,
-        recieverId: recieverValue
+        offerId: document.getElementById("input-transaction-offer-id").value,
+        recieverId: document.getElementById("input-reciever-id").value
     }
     
     // Setup our AJAX request

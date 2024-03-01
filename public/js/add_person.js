@@ -14,44 +14,30 @@ addPersonForm.addEventListener("submit", function (e) {
     // Prevent the form from submitting
     e.preventDefault();
 
-    // Get form fields we need to get data from
-    let inputId = document.getElementById("input-id");
-    let inputName = document.getElementById("input-name");
-    let inputEmail = document.getElementById("input-email");
-    let inputPhoneNumber = document.getElementById("input-phone-number");
-    let inputHouseholdId = document.getElementById("input-household-id");
-    let inputKarma = document.getElementById("input-karma");
-
     // Get the values from the form fields
-    let inputIdValue = parseInt(inputId.value);
-    let nameValue = String(inputName.value);
-    let emailValue = String(inputEmail.value);
-    let phoneNumberValue = String(inputPhoneNumber.value);
-    let householdIdValue = parseInt(inputHouseholdId.value);
-    let karmaValue = parseInt(inputKarma.value);
+    let inputIdValue = parseInt(document.getElementById("input-id").value);
 
     // Put our data we want to send in a javascript object
     var xhttp = new XMLHttpRequest();
 
-
     if ( isNaN(inputIdValue) ) {
         data = {
-            name: nameValue,
-            email: emailValue,
-            phoneNumber: phoneNumberValue,
-            householdId: householdIdValue,
-            karma: karmaValue
+            name: String(document.getElementById("input-name").value),
+            email: String(document.getElementById("input-email").value),
+            phoneNumber: String(document.getElementById("input-phone-number").value),
+            householdId: parseInt(document.getElementById("input-household-id").value),
+            karma: parseInt(document.getElementById("input-karma").value)
         }
         xhttp.open("POST", "/add-person-ajax", true);
     }
     else {
         data = {
             id : inputIdValue,
-            name: nameValue,
-            email: emailValue,
-            phoneNumber: phoneNumberValue,
-            householdId: householdIdValue,
-            karma: karmaValue 
+            name: String(document.getElementById("input-name").value),
+            email: String(document.getElementById("input-email").value),
+            phoneNumber: String(document.getElementById("input-phone-number").value),
+            householdId: parseInt(document.getElementById("input-household-id").value),
+            karma: parseInt(document.getElementById("input-karma").value) 
         }
         xhttp.open("POST", "/update-person-ajax", true);
     }

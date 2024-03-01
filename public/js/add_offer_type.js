@@ -14,15 +14,9 @@ addOfferTypeForm.addEventListener("submit", function (e) {
     // Prevent the form from submitting
     e.preventDefault();
 
-    // Get form fields we need to get data from
-    let inputOfferType = document.getElementById("input-offer-type");
-
-    // Get the values from the form fields
-    let offerTypeValue = inputOfferType.value;
-
     // Put our data we want to send in a javascript object
     let data = {
-        offerType: offerTypeValue
+        offerType: document.getElementById("input-offer-type").value
     }
     
     // Setup our AJAX request

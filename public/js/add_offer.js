@@ -14,30 +14,14 @@ addOfferForm.addEventListener("submit", function (e) {
     // Prevent the form from submitting
     e.preventDefault();
 
-    // Get form fields we need to get data from
-    let inputGiverId = document.getElementById("input-giver-id");
-    let inputItem = document.getElementById("input-item");
-    let inputDescription = document.getElementById("input-description");
-    let inputQuantity = document.getElementById("input-quantity");
-    let inputCost = document.getElementById("input-cost");
-    let inputTypeId = document.getElementById("input-type-id");
-
-    // Get the values from the form fields
-    let giverIdValue = inputGiverId.value;
-    let itemValue = inputItem.value;
-    let descriptionValue = inputDescription.value;
-    let quantityValue = inputQuantity.value;
-    let costValue = inputCost.value;
-    let typeIdValue = inputTypeId.value;
-
     // Put our data we want to send in a javascript object
     let data = {
-        giverId: giverIdValue,
-        item: itemValue,
-        description: descriptionValue,
-        quantity: quantityValue,
-        cost: costValue,
-        typeId: typeIdValue
+        giverId: document.getElementById("input-giver-id").value,
+        item: document.getElementById("input-item").value,
+        description: document.getElementById("input-description").value,
+        quantity: document.getElementById("input-quantity").value,
+        cost: document.getElementById("input-cost").value,
+        typeId: document.getElementById("input-type-id").value,
     }
     
     // Setup our AJAX request
@@ -91,7 +75,6 @@ addRowToTable = (data) => {
     let timestampCell = document.createElement("TD");
     let offerTypeCell = document.createElement("TD");
     let deleteButton = document.createElement("TD");
-
 
     // Fill the cells with correct data	
     idCell.innerText = newRow.offerId;	
