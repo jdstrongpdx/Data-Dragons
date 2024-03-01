@@ -30,15 +30,63 @@ hbs.handlebars.registerHelper('formatDate', function(date) {
   })
 
 /*
+    QUERIES
+*/
+
+// Queries for joining tables and replacing FK references with meaningful values
+show_people_table = `
+SELECT personId, personName, personEmail, personPhoneNumber, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress, personKarma 
+FROM People
+LEFT JOIN Households ON personHouseholdID = householdID
+ORDER BY personID;
+`;
+
+
+show_household_table = `
+SELECT householdId, householdAddress, householdCity, householdState, householdZipcode, neighborhoodName 
+FROM Households
+INNER JOIN Neighborhoods ON neighborhoodID = householdNeighborhoodId
+ORDER BY householdId;
+`;
+
+show_offers_table = `
+SELECT offerId, personEmail as giverEmail, offerItem, offerDescription, offerQuantity, offerCost, offerTime, offerType
+FROM Offers
+INNER JOIN People ON offerGiverId = personId
+INNER JOIN OfferTypes ON Offers.offerTypeId = OfferTypes.offerTypeId
+ORDER BY offerId;
+`;
+
+show_transactions_table = `
+SELECT transactionId, offerItem as item, g.personEmail as giver, r.personEmail as receiver, transactionTime 
+FROM Transactions
+INNER JOIN Offers ON transactionOfferId = offerId
+INNER JOIN People AS g ON g.personId = offerGiverId
+INNER JOIN People AS r ON r.personId = transactionReceiverId
+ORDER BY transactionId;
+`;
+
+// Queries for populating dropdowns or displays with no FK references
+get_people = "SELECT * FROM People;";
+
+get_households = "SELECT householdId, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress FROM Households;";
+
+get_neighborhoods = "SELECT * FROM Neighborhoods;";
+
+get_offer_types = "SELECT * FROM OfferTypes;";
+
+get_offers = "SELECT * FROM Offers;";
+
+
+/*
     ROUTES -- GET
 */
+
 app.get('/', function(req, res)
     {  
-        let query1 = "SELECT * FROM People;";
-        db.pool.query(query1, function(error, rows, fields){
-        res.render('index', {data: rows});
-        })
-    });
+        res.render('index');
+    }
+);
 
 /* Citation for the code for the reset route:
    Date: 2/28/24
@@ -59,34 +107,22 @@ app.get('/reset', function(req, res)
 app.get('/people', function(req, res)
     {  
 
-    // If there is no query string, we just perform a basic SELECT
-    let query1 = "";
-
+    // If theres no query string, show the full table; otherwise this is a search
     if (req.query.qname === undefined)
     {
-        query1 = `
-        SELECT personId, personName, personEmail, personPhoneNumber, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress, personKarma 
-        FROM People
-        LEFT JOIN Households ON personHouseholdID = householdID
-        ORDER BY personID;
-        `;
+        people_query = show_people_table
     }
-
-    // If there is a query string, we assume this is a search, and return desired results
     else
     {
-        query1 = `SELECT * FROM People WHERE personName LIKE "${req.query.qname}%"`
+        people_query = `SELECT * FROM People WHERE personName LIKE "${req.query.qname}%"`
     }
 
-    // Query 2 is the same in both cases
-    let query2 = "SELECT householdId, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress FROM Households;";
-
-    // Run the 1st query
-    db.pool.query(query1, function(error, rows, fields){
+    // Run the main query
+    db.pool.query(people_query, function(error, rows, fields){
         let people = rows;
         
-        // Run the second query
-        db.pool.query(query2, (error, rows, fields) => {
+        // Run the second query for a dropdown
+        db.pool.query(get_households, (error, rows, fields) => {
             let households = rows;
 
             return res.render('people', {data: people, households: households});
@@ -96,23 +132,13 @@ app.get('/people', function(req, res)
 
 app.get('/households', function(req, res)
 {  
-    let query1 = `
-    SELECT householdId, householdAddress, householdCity, householdState, householdZipcode, neighborhoodName 
-    FROM Households
-    INNER JOIN Neighborhoods ON neighborhoodID = householdNeighborhoodId
-    ORDER BY householdId;
-    `;
-
-    // Query 2 is the same in both cases
-    let query2 = "SELECT * FROM Neighborhoods;";
-
-    // Run the 1st query
-    db.pool.query(query1, function(error, rows, fields){
+    // Run the main query
+    db.pool.query(show_household_table, function(error, rows, fields){
         
         let households = rows;
         
-        // Run the second query
-        db.pool.query(query2, (error, rows, fields) => {
+        // Run the second query for a dropdown
+        db.pool.query(get_neighborhoods, (error, rows, fields) => {
             
             let neighborhoods = rows;
             return res.render('households', {data: households, neighborhoods: neighborhoods});
@@ -122,36 +148,23 @@ app.get('/households', function(req, res)
 
 app.get('/neighborhoods', function(req, res)
 {  
-    let query1 = "SELECT * FROM Neighborhoods;";
-    db.pool.query(query1, function(error, rows, fields){
+    db.pool.query(get_neighborhoods, function(error, rows, fields){
     res.render('neighborhoods', {data: rows});
     })
 });
 
 app.get('/offers', function(req, res)
 {  
-    let query1 = `
-    SELECT offerId, personEmail as giverEmail, offerItem, offerDescription, offerQuantity, offerCost, offerTime, offerType
-    FROM Offers
-    INNER JOIN People ON offerGiverId = personId
-    INNER JOIN OfferTypes ON Offers.offerTypeId = OfferTypes.offerTypeId
-    ORDER BY offerId;
-    `;
-
-    // Query 2 is the same in both cases
-    let query2 = "SELECT * FROM OfferTypes;";
-
-    let query3 = "SELECT * FROM People;";
-
-    // Run the 1st query
-    db.pool.query(query1, function(error, rows, fields){
+    // Run the main query
+    db.pool.query(show_offers_table, function(error, rows, fields){
         let offers = rows;
         
-        // Run the second query
-        db.pool.query(query2, (error, rows, fields) => {
+        // Run the second query for a dropdown
+        db.pool.query(get_offer_types, (error, rows, fields) => {
             let offerTypes = rows;
 
-            db.pool.query(query3, (error, rows, fields) => {
+            // Run the third query for a dropdown
+            db.pool.query(get_people, (error, rows, fields) => {
                 let people = rows;
                 
                 return res.render('offers', {data: offers, offerTypes: offerTypes, people, people});
@@ -162,37 +175,23 @@ app.get('/offers', function(req, res)
 
 app.get('/offerTypes', function(req, res)
 {  
-    let query1 = "SELECT * FROM OfferTypes;";
-    db.pool.query(query1, function(error, rows, fields){
+    db.pool.query(get_offer_types, function(error, rows, fields){
     res.render('offerTypes', {data: rows});
     })
 });
 
 app.get('/transactions', function(req, res)
 {  
-    let query1 = `
-    SELECT transactionId, offerItem as item, g.personName as giver, r.personName as receiver, transactionTime 
-    FROM Transactions
-    INNER JOIN Offers ON transactionOfferId = offerId
-    INNER JOIN People AS g ON g.personId = offerGiverId
-    INNER JOIN People AS r ON r.personId = transactionReceiverId
-    ORDER BY transactionId;
-    `;
-
-    // Query 2 is the same in both cases
-    let query2 = "SELECT * FROM Offers;";
-
-    let query3 = "SELECT * FROM People;";
-
-    // Run the 1st query
-    db.pool.query(query1, function(error, rows, fields){
+    // Run the main query
+    db.pool.query(show_transactions_table, function(error, rows, fields){
         let transactions = rows;
         
-        // Run the second query
-        db.pool.query(query2, (error, rows, fields) => {
+        // Run the second query for a dropdown
+        db.pool.query(get_offers, (error, rows, fields) => {
             let offers = rows;
 
-            db.pool.query(query3, (error, rows, fields) => {
+            // Run the second query for a dropdown
+            db.pool.query(get_people, (error, rows, fields) => {
                 let people = rows;
                 
                 return res.render('transactions', {data: transactions, offers: offers, people, people});
@@ -201,7 +200,8 @@ app.get('/transactions', function(req, res)
 })
 });
 
-    /*
+
+/*
     ROUTES -- POST
 */
 
@@ -210,7 +210,6 @@ app.post('/add-person-ajax', function(req, res)
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-
     // Capture NULL values
     let householdId = data.householdId;
     if (isNaN(householdId))
@@ -218,9 +217,9 @@ app.post('/add-person-ajax', function(req, res)
         householdId = 'NULL'
     }
 
-    // Create the query and run it on the database
-    query1 = `INSERT INTO People (personName, personEmail, personPhoneNumber, personHouseholdId, personKarma) VALUES (?, ?, ?, ?, ?)`;
-    db.pool.query(query1, [data.name, data.email, data.phoneNumber, data.householdId, data.karma], function(error, rows, fields){
+    // Run the INSERT query
+    add_person = `INSERT INTO People (personName, personEmail, personPhoneNumber, personHouseholdId, personKarma) VALUES (?, ?, ?, ?, ?)`;
+    db.pool.query(add_person, [data.name, data.email, data.phoneNumber, data.householdId, data.karma], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
@@ -232,14 +231,7 @@ app.post('/add-person-ajax', function(req, res)
         else
         {
             // If there was no error, retrieve the new table state
-            query2 = 
-            `
-            SELECT personId, personName, personEmail, personPhoneNumber, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress, personKarma 
-            FROM People
-            LEFT JOIN Households ON personHouseholdID = householdID
-            ORDER BY personID;
-            `;
-            db.pool.query(query2, function(error, rows, fields){
+            db.pool.query(show_people_table, function(error, rows, fields){
 
                 // If there was an error on the second query, send a 400
                 if (error) {
@@ -271,8 +263,8 @@ app.post('/update-person-ajax', function(req, res)
         householdId = 'NULL'
     }
 
-    // Create the query and run it on the database
-    query1 = `
+    // Run the UPDATE query
+    update_person = `
     UPDATE People 
     SET 
         personName = ?, 
@@ -283,7 +275,7 @@ app.post('/update-person-ajax', function(req, res)
     WHERE 
         personId = ?;`;
     
-    db.pool.query(query1, [data.name, data.email, data.phoneNumber, data.householdId, data.karma, data.id], function(error, rows, fields){
+    db.pool.query(update_person, [data.name, data.email, data.phoneNumber, data.householdId, data.karma, data.id], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
@@ -294,15 +286,14 @@ app.post('/update-person-ajax', function(req, res)
         }
         else
         {
-            // If there was no error, retrieve the new table state
-            query2 = 
-            `
+            // If there was no error, send the row to update
+            find_updated_person = `
             SELECT personId, personName, personEmail, personPhoneNumber, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress, personKarma 
             FROM People
             LEFT JOIN Households ON personHouseholdID = householdID
             WHERE personID = ?;
             `;
-            db.pool.query(query2, [data.id], function(error, rows, fields){
+            db.pool.query(find_updated_person, [data.id], function(error, rows, fields){
 
                 // If there was an error on the second query, send a 400
                 if (error) {
@@ -335,9 +326,9 @@ app.post('/add-household-ajax', function(req, res)
         householdId = 'NULL'
     }
 
-    // Create the query and run it on the database
-    query1 = `INSERT INTO Households (householdAddress, householdCity, householdState, householdZipcode, householdNeighborhoodId) VALUES (?, ?, ?, ?, ?)`;
-    db.pool.query(query1, [data.address, data.city, data.state, data.zipCode, data.neighborhoodId], function(error, rows, fields){
+    // Run the INSERT query
+    add_household = `INSERT INTO Households (householdAddress, householdCity, householdState, householdZipcode, householdNeighborhoodId) VALUES (?, ?, ?, ?, ?)`;
+    db.pool.query(add_household, [data.address, data.city, data.state, data.zipCode, data.neighborhoodId], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
@@ -349,13 +340,7 @@ app.post('/add-household-ajax', function(req, res)
         else
         {
             // If there was no error, retrieve the new table state
-            query2 = `
-            SELECT householdId, householdAddress, householdCity, householdState, householdZipcode, neighborhoodName 
-            FROM Households
-            INNER JOIN Neighborhoods ON neighborhoodID = householdNeighborhoodId
-            ORDER BY householdId;
-            `;
-            db.pool.query(query2, function(error, rows, fields){
+            db.pool.query(show_household_table, function(error, rows, fields){
 
                 // If there was an error on the second query, send a 400
                 if (error) {
@@ -380,9 +365,9 @@ app.post('/add-neighborhood-ajax', function(req, res)
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    // Create the query and run it on the database
-    query1 = `INSERT INTO Neighborhoods (neighborhoodName) VALUES (?)`;
-    db.pool.query(query1, [data.name], function(error, rows, fields){
+    // Run the INSERT query
+    add_neighborhood = `INSERT INTO Neighborhoods (neighborhoodName) VALUES (?)`;
+    db.pool.query(add_neighborhood, [data.name], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
@@ -394,8 +379,7 @@ app.post('/add-neighborhood-ajax', function(req, res)
         else
         {
             // If there was no error, retrieve the new table state
-            query2 = `SELECT * FROM Neighborhoods;`;
-            db.pool.query(query2, function(error, rows, fields){
+            db.pool.query(get_neighborhoods, function(error, rows, fields){
 
                 // If there was an error on the second query, send a 400
                 if (error) {
@@ -420,9 +404,9 @@ app.post('/add-offer-ajax', function(req, res)
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    // Create the query and run it on the database
-    query1 = `INSERT INTO Offers (offerGiverId, offerItem, offerDescription, offerQuantity, offerCost, offerTypeId) VALUES (?, ?, ?, ?, ?, ?)`;
-    db.pool.query(query1, [data.giverId, data.item, data.description, data.quantity, data.cost, data.typeId], function(error, rows, fields){
+    // Run the INSERT query
+    add_offer = `INSERT INTO Offers (offerGiverId, offerItem, offerDescription, offerQuantity, offerCost, offerTypeId) VALUES (?, ?, ?, ?, ?, ?)`;
+    db.pool.query(add_offer, [data.giverId, data.item, data.description, data.quantity, data.cost, data.typeId], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
@@ -434,14 +418,7 @@ app.post('/add-offer-ajax', function(req, res)
         else
         {
             // If there was no error, retrieve the new table state
-            query2 = `
-            SELECT offerId, personEmail as giverEmail, offerItem, offerDescription, offerQuantity, offerCost, offerTime, offerType
-            FROM Offers
-            INNER JOIN People ON offerGiverId = personId
-            INNER JOIN OfferTypes ON Offers.offerTypeId = OfferTypes.offerTypeId
-            ORDER BY offerId;
-            `;
-            db.pool.query(query2, function(error, rows, fields){
+            db.pool.query(show_offers_table, function(error, rows, fields){
 
                 // If there was an error on the second query, send a 400
                 if (error) {
@@ -466,9 +443,9 @@ app.post('/add-offer-type-ajax', function(req, res)
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
-    // Create the query and run it on the database
-    query1 = `INSERT INTO OfferTypes (offerType) VALUES (?)`;
-    db.pool.query(query1, [data.offerType], function(error, rows, fields){
+    // Run the INSERT query
+    add_offer_type = `INSERT INTO OfferTypes (offerType) VALUES (?)`;
+    db.pool.query(add_offer_type, [data.offerType], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
@@ -479,8 +456,7 @@ app.post('/add-offer-type-ajax', function(req, res)
         }
         {
             // If there was no error, retrieve the new table state
-            query2 = `SELECT * FROM OfferTypes;`;
-            db.pool.query(query2, function(error, rows, fields){
+            db.pool.query(get_offer_types, function(error, rows, fields){
 
                 // If there was an error on the second query, send a 400
                 if (error) {
@@ -509,9 +485,9 @@ app.post('/add-transaction-ajax', function(req, res)
     let offerId = data.offerId;
     let recieverId = data.recieverId;
 
-    // Create the query and run it on the database
-    query1 = `INSERT INTO Transactions (transactionOfferID, transactionReceiverID) VALUES (?, ?)`;
-    db.pool.query(query1, [data.offerId, data.recieverId], function(error, rows, fields){
+    // Run the INSERT query
+    add_transaction = `INSERT INTO Transactions (transactionOfferID, transactionReceiverID) VALUES (?, ?)`;
+    db.pool.query(add_transaction, [data.offerId, data.recieverId], function(error, rows, fields){
 
         // Check to see if there was an error
         if (error) {
@@ -522,15 +498,7 @@ app.post('/add-transaction-ajax', function(req, res)
         }
         {
             // If there was no error, retrieve the new table state
-            query2 = `
-            SELECT transactionId, offerItem as item, g.personName as giver, r.personName as receiver, transactionTime 
-            FROM Transactions
-            INNER JOIN Offers ON transactionOfferId = offerId
-            INNER JOIN People AS g ON g.personId = offerGiverId
-            INNER JOIN People AS r ON r.personId = transactionReceiverId
-            ORDER BY transactionId;
-            `;
-            db.pool.query(query2, function(error, rows, fields){
+            db.pool.query(show_transactions_table, function(error, rows, fields){
 
                 // If there was an error on the second query, send a 400
                 if (error) {
@@ -553,8 +521,9 @@ app.post('/add-transaction-ajax', function(req, res)
 app.delete('/delete-offer-ajax/', function(req, res, next){
     let data = req.body;
     let offerId = parseInt(data.id);
+
+    // Run the delete query
     let deleteOffer = `DELETE FROM Offers WHERE offerId = ?`;
-    // Run the 1st query
     db.pool.query(deleteOffer, [offerId], function(error, rows, fields){
         if (error) {
 
