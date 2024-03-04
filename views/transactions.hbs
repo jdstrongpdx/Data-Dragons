@@ -15,6 +15,7 @@ Citation for the following function:
             <th>Item</th>
             <th>Receiver</th>
             <th>Timestamp</th>
+            <th>Delete</th>
         </tr>
     </thead>
 
@@ -27,10 +28,12 @@ Citation for the following function:
             <td>{{this.item}}</td>
             <td>{{this.receiver}}</td>
             <td>{{formatDate this.transactionTime}}</td>
+            <td><button onclick="deleteTransaction({{this.transactionId}})">Delete</button></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+{{!-- JS code for delete function is in the add_transaction.js file --}}
 
 {{!-- Form to add a record to the table  --}}
 <h2>Add a Transaction</h2>
