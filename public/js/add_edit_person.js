@@ -20,7 +20,8 @@ addPersonForm.addEventListener("submit", function (e) {
     // Put our data we want to send in a javascript object
     var xhttp = new XMLHttpRequest();
 
-    if ( isNaN(inputIdValue) ) {
+    noInputID = isNaN(inputIdValue)
+    if ( noInputID ) {
         data = {
             name: String(document.getElementById("input-name").value),
             email: String(document.getElementById("input-email").value),
@@ -50,9 +51,8 @@ addPersonForm.addEventListener("submit", function (e) {
         if (xhttp.readyState == 4 && xhttp.status == 204) {
 
             // Reload the table
-            location.reload()
-            window.scrollTo(0, document.getElementById("people-table").offsetTop);
-            resetButton();
+            reloadPage(inputIdValue)
+
         }
         else if (xhttp.readyState == 4 && xhttp.status != 204) {
             console.log("There was an error with the input.")
@@ -111,4 +111,33 @@ function resetButton() {
     document.getElementById('submit-button').value = 'Add Person';
     document.getElementById("input-id-text").classList.add('hidden');
     document.getElementById("input-id").classList.add('hidden');
+}
+
+function highlightNew( target ) {
+    let currentTable = document.getElementById("people-table");
+    let tbody = currentTable.getElementsByTagName("tbody")[0];
+
+    for (var i = 0; i < tbody.rows.length; i++) {
+        var row = tbody.rows[i];
+        // Find the row we want to modify
+        if (row.cells[0].textContent == target) {
+            row.classList.add('highlight');
+            break;
+        }
+    };
+}
+
+function reloadPage(id) {
+    sessionStorage.setItem("reloading", "true");
+    sessionStorage.setItem("id", id);
+    location.reload();
+    window.scrollTo(0, document.getElementById("people-table").offsetTop);
+}
+            
+window.onload = function() {
+    var reloading = sessionStorage.getItem("reloading");
+    if (reloading) {
+        sessionStorage.removeItem("reloading");
+        highlightNew(sessionStorage.getItem("id"));
+    }
 }
