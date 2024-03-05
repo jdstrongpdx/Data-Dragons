@@ -149,6 +149,11 @@ function highlightNew( target ) {
     };
 }
 
+/* Citation for the following two functions:
+   Date: 3/5/24
+   Adapted from sample code by user Barmar
+   Source URL: https://stackoverflow.com/questions/41904975/refresh-page-and-run-function-after-javascript
+*/ 
 function reloadPage(id) {
     sessionStorage.setItem("reloading", "true");
     sessionStorage.setItem("id", id);
