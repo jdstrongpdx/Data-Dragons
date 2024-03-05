@@ -427,6 +427,27 @@ app.delete('/delete-transaction-ajax/', function(req, res, next){
   })
 });
 
+app.delete('/delete-transaction-ajax/', function(req, res, next){
+    let data = req.body;
+    let transactionId = parseInt(data.id);
+
+    // Run the delete query
+    let deleteTransaction = `DELETE FROM Transactions WHERE transactionId = ?`;
+    db.pool.query(deleteTransaction, [transactionId], function(error, rows, fields){
+        if (error) {
+
+        // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+        console.log(error);
+        res.status(400).send(error);
+        }
+
+        else
+        {
+        res.sendStatus(204);
+        }
+  })
+});
+
 /*
     LISTENER
 */
