@@ -15,6 +15,7 @@ Citation for the following function:
             <th>Item</th>
             <th>Receiver</th>
             <th>Timestamp</th>
+            <th>Update</th>
             <th>Delete</th>
         </tr>
     </thead>
@@ -28,6 +29,7 @@ Citation for the following function:
             <td>{{this.item}}</td>
             <td>{{this.receiver}}</td>
             <td>{{formatDate this.transactionTime}}</td>
+            <td><button onclick="populateUpdateForm({{this.transactionId}})">Update</button></td>
             <td><button onclick="deleteTransaction({{this.transactionId}})">Delete</button></td>
         </tr>
         {{/each}}
@@ -36,9 +38,12 @@ Citation for the following function:
 {{!-- JS code for delete function is in the add_transaction.js file --}}
 
 {{!-- Form to add a record to the table  --}}
-<h2>Add a Transaction</h2>
+<h2 id="transaction-form">Add a Transaction</h2>
 <form id="add-transaction-form-ajax">
 
+    <label id="input-id-text" class="hidden" for="input-id">Id (Read Only): </label>
+    <input type="number" class="hidden" name="input-id" id="input-id" readonly="readonly" disabled>
+    
     <label for="input-transaction-offer-id">Offer Item: *</label>
     <div class="selection">
         <select name="input-transaction-offer-id" id="input-transaction-offer-id" required>
@@ -59,8 +64,8 @@ Citation for the following function:
         </select>
     </div>
 
-    <input type="submit" value="Add Transaction">
-    <input type="reset" value="Reset Form">
+    <input id="submit-button" type="submit" value="Add Transaction">
+    <input type="reset" value="Reset Form" onclick="resetButton()">
 </form>
 
 {{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}

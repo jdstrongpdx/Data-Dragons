@@ -391,6 +391,42 @@ app.post('/add-transaction-ajax', function(req, res)
     })
 });
 
+app.post('/edit-transaction-ajax', function(req, res) 
+{
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+    let transactionId = data.transactionId;
+    if (isNaN(transactionId))
+    {
+        transactionId = null;
+    }
+
+    // Run the UPDATE query
+    update_transaction = `
+    UPDATE Transactions 
+    SET 
+        transactionOfferId = ?, 
+        transactionReceiverId = ?
+    WHERE 
+        transactionId = ?;`;
+    
+    db.pool.query(update_transaction, [data.offerId, data.recieverId, data.transactionId], function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.status(400).send(error);
+        }
+        else {
+            res.sendStatus(204);
+        }
+    })
+});
+
 app.delete('/delete-offer-ajax/', function(req, res, next){
     let data = req.body;
     let offerId = parseInt(data.id);
