@@ -71,9 +71,9 @@ get_people = "SELECT * FROM People;";
 
 get_households = "SELECT householdId, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress FROM Households;";
 
-get_neighborhoods = "SELECT * FROM Neighborhoods;";
+get_neighborhoods = "SELECT * FROM Neighborhoods ORDER BY neighborhoodId;";
 
-get_offer_types = "SELECT * FROM OfferTypes;";
+get_offer_types = "SELECT * FROM OfferTypes ORDER BY offerTypeId;";
 
 get_offers = "SELECT * FROM Offers;";
 

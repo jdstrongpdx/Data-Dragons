@@ -45,6 +45,12 @@ INNER JOIN People AS g ON g.personId = offerGiverId
 INNER JOIN People AS r ON r.personId = transactionReceiverId
 ORDER BY transactionId;
 
+-- Get table of neighborhoods for displaying
+SELECT * FROM Neighborhoods ORDER BY neighborhoodId;
+
+-- Get table of offer types for displaying
+SELECT * FROM OfferTypes ORDER BY offerTypeId;
+
 -- Create Operations
 
 INSERT INTO Neighborhoods (neighborhoodName)

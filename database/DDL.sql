@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS `Neighborhoods` ;
 
 CREATE TABLE IF NOT EXISTS `Neighborhoods` (
   `neighborhoodId` INT NOT NULL AUTO_INCREMENT,
-  `neighborhoodName` VARCHAR(75) NOT NULL,
+  `neighborhoodName` VARCHAR(75) NOT NULL UNIQUE,
   PRIMARY KEY (`neighborhoodId`)
 );
 
@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS `Households` (
   `householdZipcode` VARCHAR (15) NOT NULL,
   `householdNeighborhoodId` INT NOT NULL,
   PRIMARY KEY (`householdId`),
-  FOREIGN KEY (`householdNeighborhoodId`) REFERENCES `Neighborhoods` (`neighborhoodId`)
+  FOREIGN KEY (`householdNeighborhoodId`) REFERENCES `Neighborhoods` (`neighborhoodId`),
+  UNIQUE `unique_address` (`householdAddress`, `householdCity`, `householdState`, `householdZipcode`)
   );
 
 INSERT INTO Households (householdAddress, householdCity, householdState, householdZipcode, householdNeighborhoodId) VALUES
@@ -92,7 +93,7 @@ DROP TABLE IF EXISTS `OfferTypes` ;
 
 CREATE TABLE IF NOT EXISTS `OfferTypes` (
   `offerTypeId` INT NOT NULL AUTO_INCREMENT,
-  `offerType` VARCHAR(45) NOT NULL,
+  `offerType` VARCHAR(45) NOT NULL UNIQUE,
   PRIMARY KEY (`offerTypeId`)
 );
 
