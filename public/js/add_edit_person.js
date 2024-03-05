@@ -47,21 +47,14 @@ addPersonForm.addEventListener("submit", function (e) {
 
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
+        if (xhttp.readyState == 4 && xhttp.status == 204) {
 
-            // Add the new data to the table
-            if ( isNaN(inputIdValue) ){
-                addRowToTable(xhttp.response);
-            }
-            else {
-                updateRowInTable(xhttp.response);
-            }
-
-            // Clear the input fields for another transaction
-            addPersonForm.reset();
+            // Reload the table
+            location.reload()
             window.scrollTo(0, document.getElementById("people-table").offsetTop);
+            resetButton();
         }
-        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+        else if (xhttp.readyState == 4 && xhttp.status != 204) {
             console.log("There was an error with the input.")
             var errorMsg = JSON.parse(xhttp.response);
             alert(errorMsg.sqlMessage)
@@ -73,84 +66,6 @@ addPersonForm.addEventListener("submit", function (e) {
 
 })
 
-
-// Creates a single row from an Object representing a single record from People
-addRowToTable = (data) => {
-
-    // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("people-table");
-    let tbody = currentTable.getElementsByTagName("tbody")[0];
-
-    // Get the new data
-    let parsedData = JSON.parse(data);
-    let newRow = parsedData[parsedData.length - 1]
-
-    // Replace the content of the new row with the data we obtained
-    let row = document.createElement("TR");
-    
-    let idCell = document.createElement("TD");
-    let nameCell = document.createElement("TD");
-    let emailCell = document.createElement("TD");
-    let phoneNumberCell = document.createElement("TD");
-    let householdIdCell = document.createElement("TD");
-    let karmaIdCell = document.createElement("TD");
-    let editButton = document.createElement("TD");
-
-    // Fill the cells with correct data	
-    idCell.innerText = newRow.personId;	
-    nameCell.innerText = newRow.personName;	
-    emailCell.innerText = newRow.personEmail;	
-    phoneNumberCell.innerText = newRow.personPhoneNumber;	
-    householdIdCell.innerText = newRow.fullAddress;	
-    karmaIdCell.innerText = newRow.personKarma;
-    editButton.innerHTML = `<button onclick="populateUpdateForm(${newRow.personId})">Update</button>`;  
-    
-    // Add the cells to the row 	
-    row.appendChild(idCell);	
-    row.appendChild(nameCell);	
-    row.appendChild(emailCell);	
-    row.appendChild(phoneNumberCell);	
-    row.appendChild(householdIdCell);	
-    row.appendChild(karmaIdCell);
-    row.appendChild(editButton);
-
-    // Unhighlight all rows 
-    for (var i = 0; i < currentTable.rows.length; i++) {
-        currentTable.rows[i].classList.remove("highlight");
-    }
-    
-    // Highlight the target row
-    row.classList.add('highlight');
-    tbody.appendChild(row);   
-
-}
-
-updateRowInTable = (data) => {
-
-    // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("people-table");
-    let tbody = currentTable.getElementsByTagName("tbody")[0];
-
-    // Get the new data
-    let updateData = JSON.parse(data);
-    updateRow = updateData[0]
-
-    for (var i = 0; i < tbody.rows.length; i++) {
-        var row = tbody.rows[i];
-        // Find the row we want to modify
-        if (row.cells[0].textContent == updateRow.personId) {
-            row.cells[1].innerText = updateRow.personName;
-            row.cells[2].innerText = updateRow.personEmail;
-            row.cells[3].innerText = updateRow.personPhoneNumber;
-            row.cells[4].innerText = updateRow.fullAddress;
-            row.cells[5].innerText = updateRow.personKarma;
-            row.classList.add('highlight');
-        }
-        else {
-            row.classList.remove('highlight');
-        }
-    };
-}
 
 function populateUpdateForm(personID) {
     let table = document.getElementById("people-table");

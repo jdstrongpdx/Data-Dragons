@@ -31,16 +31,13 @@ addHouseholdForm.addEventListener("submit", function (e) {
 
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
+        if (xhttp.readyState == 4 && xhttp.status == 204) {
 
-            // Add the new data to the table
-            addRowToTable(xhttp.response);
-
-            // Clear the input fields for another transaction
-            addHouseholdForm.reset();
+            // Reload the table
+            location.reload()
             window.scrollTo(0, document.getElementById("household-table").offsetTop);
         }
-        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+        else if (xhttp.readyState == 4 && xhttp.status != 204)  {
             console.log("There was an error with the input.")
             var errorMsg = JSON.parse(xhttp.response);
             alert(errorMsg.sqlMessage)
@@ -51,51 +48,3 @@ addHouseholdForm.addEventListener("submit", function (e) {
     xhttp.send(JSON.stringify(data));
 
 })
-
-
-// Creates a single row from an Object representing a single record from Households
-addRowToTable = (data) => {
-
-   // Get a reference to the current table on the page and clear it out.
-   let currentTable = document.getElementById("household-table");
-   let tbody = currentTable.getElementsByTagName("tbody")[0];
-
-   // Get the new data
-   let parsedData = JSON.parse(data);
-   let newRow = parsedData[parsedData.length - 1]
-
-   // Replace the content of the new row with the data we obtained
-   let row = document.createElement("TR");	   
-   let idCell = document.createElement("TD");
-   let addressCell = document.createElement("TD");
-   let cityCell = document.createElement("TD");
-   let stateCell = document.createElement("TD");
-   let zipCell = document.createElement("TD");
-   let neighborhoodIDCell = document.createElement("TD");
-
-   // Fill the cells with correct data	
-   idCell.innerText = newRow.householdId;	
-   addressCell.innerText = newRow.householdAddress;	
-   cityCell.innerText = newRow.householdCity;	
-   stateCell.innerText = newRow.householdState;	
-   zipCell.innerText = newRow.householdZipcode;	
-   neighborhoodIDCell.innerText = newRow.neighborhoodName;
-   
-   // Add the cells to the row 	
-   row.appendChild(idCell);	
-   row.appendChild(addressCell);	
-   row.appendChild(cityCell);	
-   row.appendChild(stateCell);	
-   row.appendChild(zipCell);	
-   row.appendChild(neighborhoodIDCell);
-
-   
-    // Unhighlight all rows 
-    for (var i = 0; i < currentTable.rows.length; i++) {
-        currentTable.rows[i].classList.remove("highlight");
-    }
-    
-    // Highlight the target row
-    row.classList.add('highlight');
-    tbody.appendChild(row);   
-}

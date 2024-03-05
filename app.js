@@ -176,7 +176,7 @@ app.get('/offers', function(req, res)
 app.get('/offerTypes', function(req, res)
 {  
     db.pool.query(get_offer_types, function(error, rows, fields){
-    res.render('offerTypes', {data: rows});
+        res.render('offerTypes', {data: rows});
     })
 });
 
@@ -214,7 +214,7 @@ app.post('/add-person-ajax', function(req, res)
     let householdId = data.householdId;
     if (isNaN(householdId))
     {
-        householdId = 'NULL'
+        householdId = null;
     }
 
     // Run the INSERT query
@@ -228,25 +228,8 @@ app.post('/add-person-ajax', function(req, res)
             console.log(error);
             res.status(400).send(error);
         }
-        else
-        {
-            // If there was no error, retrieve the new table state
-            db.pool.query(show_people_table, function(error, rows, fields){
-
-                // If there was an error on the second query, send a 400
-                if (error) {
-                    
-                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                    console.log(error);
-                    res.status(400).send(error);
-                }
-                // If all went well, send the results of the query back.
-                else
-                {
-                    // app.get('/people');
-                    res.send(rows);
-                }
-            })
+        else {
+            res.sendStatus(204);
         }
     })
 });
@@ -260,7 +243,7 @@ app.post('/update-person-ajax', function(req, res)
     let householdId = data.householdId;
     if (isNaN(householdId))
     {
-        householdId = 'NULL'
+        householdId = null;
     }
 
     // Run the UPDATE query
@@ -284,31 +267,8 @@ app.post('/update-person-ajax', function(req, res)
             console.log(error);
             res.status(400).send(error);
         }
-        else
-        {
-            // If there was no error, send the row to update
-            find_updated_person = `
-            SELECT personId, personName, personEmail, personPhoneNumber, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress, personKarma 
-            FROM People
-            LEFT JOIN Households ON personHouseholdID = householdID
-            WHERE personID = ?;
-            `;
-            db.pool.query(find_updated_person, [data.id], function(error, rows, fields){
-
-                // If there was an error on the second query, send a 400
-                if (error) {
-                    
-                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                    console.log(error);
-                    res.status(400).send(error);
-                }
-                // If all went well, send the results of the query back.
-                else
-                {
-                    // app.get('/people');
-                    res.send(rows);
-                }
-            })
+        else {
+            res.sendStatus(204);
         }
     })
 });
@@ -323,7 +283,7 @@ app.post('/add-household-ajax', function(req, res)
     let householdId = data.householdId;
     if (isNaN(householdId))
     {
-        householdId = 'NULL'
+        householdId = null;
     }
 
     // Run the INSERT query
@@ -337,25 +297,8 @@ app.post('/add-household-ajax', function(req, res)
             console.log(error);
             res.status(400).send(error);
         }
-        else
-        {
-            // If there was no error, retrieve the new table state
-            db.pool.query(show_household_table, function(error, rows, fields){
-
-                // If there was an error on the second query, send a 400
-                if (error) {
-                    
-                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                    console.log(error);
-                    res.status(400).send(error);
-                }
-                // If all went well, send the results of the query back.
-                else
-                {
-                    // app.get('/people');
-                    res.send(rows);
-                }
-            })
+        else {
+            res.sendStatus(204);
         }
     })
 });
@@ -376,25 +319,8 @@ app.post('/add-neighborhood-ajax', function(req, res)
             console.log(error);
             res.status(400).send(error);
         }
-        else
-        {
-            // If there was no error, retrieve the new table state
-            db.pool.query(get_neighborhoods, function(error, rows, fields){
-
-                // If there was an error on the second query, send a 400
-                if (error) {
-                    
-                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                    console.log(error);
-                    res.status(400).send(error);
-                }
-                // If all went well, send the results of the query back.
-                else
-                {
-                    // app.get('/people');
-                    res.send(rows);
-                }
-            })
+        else {
+            res.sendStatus(204);
         }
     })
 });
@@ -415,25 +341,8 @@ app.post('/add-offer-ajax', function(req, res)
             console.log(error);
             res.status(400).send(error);
         }
-        else
-        {
-            // If there was no error, retrieve the new table state
-            db.pool.query(show_offers_table, function(error, rows, fields){
-
-                // If there was an error on the second query, send a 400
-                if (error) {
-                    
-                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                    console.log(error);
-                    res.status(400).send(error);
-                }
-                // If all went well, send the results of the query back.
-                else
-                {
-                    // app.get('/people');
-                    res.send(rows);
-                }
-            })
+        else {
+            res.sendStatus(204);
         }
     })
 });
@@ -454,24 +363,8 @@ app.post('/add-offer-type-ajax', function(req, res)
             console.log(error)
             res.status(400).send(error);
         }
-        {
-            // If there was no error, retrieve the new table state
-            db.pool.query(get_offer_types, function(error, rows, fields){
-
-                // If there was an error on the second query, send a 400
-                if (error) {
-                    
-                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                    console.log(error);
-                    res.status(400).send(error);;
-                }
-                // If all went well, send the results of the query back.
-                else
-                {
-                    // app.get('/people');
-                    res.send(rows);
-                }
-            })
+        else {
+            res.sendStatus(204);
         }
     })
 });
@@ -480,10 +373,6 @@ app.post('/add-transaction-ajax', function(req, res)
 {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
-
-    // Capture NULL values
-    let offerId = data.offerId;
-    let recieverId = data.recieverId;
 
     // Run the INSERT query
     add_transaction = `INSERT INTO Transactions (transactionOfferID, transactionReceiverID) VALUES (?, ?)`;
@@ -496,24 +385,8 @@ app.post('/add-transaction-ajax', function(req, res)
             console.log(error);
             res.status(400).send(error);
         }
-        {
-            // If there was no error, retrieve the new table state
-            db.pool.query(show_transactions_table, function(error, rows, fields){
-
-                // If there was an error on the second query, send a 400
-                if (error) {
-                    
-                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-                    console.log(error);
-                    res.status(400).send(error);
-                }
-                // If all went well, send the results of the query back.
-                else
-                {
-                    // app.get('/people');
-                    res.send(rows);
-                }
-            })
+        else {
+            res.sendStatus(204);
         }
     })
 });
@@ -526,15 +399,30 @@ app.delete('/delete-offer-ajax/', function(req, res, next){
     let deleteOffer = `DELETE FROM Offers WHERE offerId = ?`;
     db.pool.query(deleteOffer, [offerId], function(error, rows, fields){
         if (error) {
-
-        // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-        console.log(error);
-        res.status(400).send(error);
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.status(400).send(error);
         }
+        else {
+            res.sendStatus(204);
+        }
+  })
+});
 
-        else
-        {
-        res.sendStatus(204);
+app.delete('/delete-transaction-ajax/', function(req, res, next){
+    let data = req.body;
+    let transactionId = parseInt(data.id);
+
+    // Run the delete query
+    let deleteTransaction = `DELETE FROM Transactions WHERE transactionId = ?`;
+    db.pool.query(deleteTransaction, [transactionId], function(error, rows, fields){
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.status(400).send(error);
+        }
+        else {
+            res.sendStatus(204);
         }
   })
 });

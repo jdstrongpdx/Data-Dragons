@@ -31,19 +31,17 @@ addOfferForm.addEventListener("submit", function (e) {
 
     // Tell our AJAX request how to resolve
     xhttp.onreadystatechange = () => {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
+        if (xhttp.readyState == 4 && xhttp.status == 204) {
 
-            // Add the new data to the table
-            addRowToTable(xhttp.response);
-
-            // Clear the input fields for another transaction
-            addOfferForm.reset();
+            // Reload the table
+            location.reload();
             window.scrollTo(0, document.getElementById("offer-table").offsetTop);
         }
-        else if (xhttp.readyState == 4 && xhttp.status != 200) {
+        else if (xhttp.readyState == 4 && xhttp.status != 204) {
             console.log("There was an error with the input.")
             var errorMsg = JSON.parse(xhttp.response);
             alert(errorMsg.sqlMessage)
+            location.reload();
         }
     }
 
@@ -52,62 +50,31 @@ addOfferForm.addEventListener("submit", function (e) {
 
 })
 
+function deleteOffer(offerId) {
+    // Put our data we want to send in a javascript object
+    let data = {
+        id: offerId
+    };
 
-// Creates a single row from an Object representing a single record from Offers
-addRowToTable = (data) => {
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("DELETE", "/delete-offer-ajax", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
 
-    // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("offer-table");
-    let tbody = currentTable.getElementsByTagName("tbody")[0];
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState == 4 && xhttp.status == 204) {
 
-    // Get the new data
-    let parsedData = JSON.parse(data);
-    let newRow = parsedData[parsedData.length - 1]
-
-    // Replace the content of the new row with the data we obtained
-    let row = document.createElement("TR");	   
-    let idCell = document.createElement("TD");
-    let giverIdcell = document.createElement("TD");
-    let itemCell = document.createElement("TD");
-    let descriptionCell = document.createElement("TD");
-    let quantityCell = document.createElement("TD");
-    let costCell = document.createElement("TD");
-    let timestampCell = document.createElement("TD");
-    let offerTypeCell = document.createElement("TD");
-    let deleteButton = document.createElement("TD");
-
-    // Fill the cells with correct data	
-    idCell.innerText = newRow.offerId;	
-    giverIdcell.innerText = newRow.giverEmail;	
-    itemCell.innerText = newRow.offerItem;	
-    descriptionCell.innerText = newRow.offerDescription;	
-    quantityCell.innerText = newRow.offerQuantity;	
-    costCell.innerText = newRow.offerCost;
-
-    // Format the timestamp
-    const dateObject = new Date(newRow.offerTime);
-    const formattedDate = dateObject.toLocaleString();
-    timestampCell.innerText =formattedDate;
-    offerTypeCell.innerText = newRow.offerType;
-    deleteButton.innerHTML = `<button onclick="deleteOffer(${newRow.offerId})">Delete</button>`;  
-    
-    // Add the cells to the row 	
-    row.appendChild(idCell);	
-    row.appendChild(giverIdcell);	
-    row.appendChild(itemCell);	
-    row.appendChild(descriptionCell);	
-    row.appendChild(quantityCell);	
-    row.appendChild(costCell);	
-    row.appendChild(timestampCell);
-    row.appendChild(offerTypeCell);
-    row.appendChild(deleteButton);
-
-    // Unhighlight all rows 
-    for (var i = 0; i < currentTable.rows.length; i++) {
-        currentTable.rows[i].classList.remove("highlight");
+            // Reload the table
+            location.reload();
+            window.scrollTo(0, document.getElementById("offer-table").offsetTop);
+        }
+        else if (xhttp.readyState == 4 && xhttp.status == 204) {
+            console.log("There was an error with the input.")
+            var errorMsg = JSON.parse(xhttp.response);
+            alert(errorMsg.sqlMessage)
+        }
     }
-    
-    // Highlight the target row
-    row.classList.add('highlight');
-    tbody.appendChild(row);   
+    // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
 }
