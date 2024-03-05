@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS `Neighborhoods` ;
 
 CREATE TABLE IF NOT EXISTS `Neighborhoods` (
   `neighborhoodId` INT NOT NULL AUTO_INCREMENT,
-  `neighborhoodName` VARCHAR(75) NOT NULL UNIQUE,
+  `neighborhoodName` VARCHAR(75) NOT NULL,
   PRIMARY KEY (`neighborhoodId`)
 );
 
