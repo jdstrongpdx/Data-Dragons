@@ -383,6 +383,11 @@ input:disabled {
   color: black;
 }
 
+input::placeholder {
+  opacity: 60%;
+}
+
+
 .address {
   width: 90%;
 }
