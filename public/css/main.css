@@ -363,12 +363,13 @@ h5, h6 {
     width: 50%;
   }
 
-  input[type=textarea] {
+  textarea{
     padding: 1%;
     font-size: 110%;
-    height: 200px;
+    width: 50%;
     background-color: var(--color-cream);
     align-items: center;
+    resize: none;
   }
   output {}
   meter {}

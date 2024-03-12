@@ -63,7 +63,8 @@ Citation for the following function:
     <input type="text" placeholder = "Item Name" name="input-item" id="input-item" required>
 
     <label for="input-description">Description: </label>
-    <input type="textarea" placeholder = "Describe the thing being offered" name="input-description" id="input-description">
+    <textarea name="input-description" id="input-description" placeholder="Describe the thing being offered" maxlength="500" 
+    oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
 
     <label for="input-quantity">Quantity: *</label>
     <input type="number" name="input-quantity" id="input-quantity" min = "1" max = "99999" value="1" required>
