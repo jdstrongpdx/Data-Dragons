@@ -1,6 +1,7 @@
 -- Group 19
--- Project Name: CloseKnit Bazzar
+-- Project Name: CloseKnit Bazaar
 -- Mike Meller and Joel String
+-- This DDL file is the skeleton for the CloseKnit Bazaar database design. It implements the schema for the database and inserts sample data to demonstrate usage.
 
 SET FOREIGN_KEY_CHECKS=0;
 SET AUTOCOMMIT = 0;

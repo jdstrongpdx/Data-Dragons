@@ -1,4 +1,8 @@
--- Note: an asterisk designates that the following variable is user-provIded through the web interface
+-- Group 19
+-- Project Name: CloseKnit Bazaar
+-- Mike Meller and Joel String
+-- This DML file contains the queries needed to implement the backend for a webapp that allows administrative users to interact with and modify the Closeknit Bazaar database.
+-- Note: an asterisk in front of a variable designates that the following variable is user-provIded through the web interface
 
 
 -- Select Operations
@@ -107,8 +111,9 @@ SET
 WHERE
     personId = (SELECT personId FROM People WHERE personEmail = '*updateUserName');
 
-
 -- Delete Operations
 
 -- Delete an Offer by name, cascade deletes transactions
-DELETE FROM Offers WHERE offerId = (SELECT offerId FROM Offers WHERE offerItem = '*itemName');
+DELETE FROM Offers WHERE offerId = *offerId;
+
+DELETE FROM Transactions WHERE transactionId = *transactionID;
