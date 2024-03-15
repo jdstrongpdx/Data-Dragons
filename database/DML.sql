@@ -11,19 +11,19 @@
 SELECT householdId, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipcode) AS fullAddress FROM Households;
 
 -- Get table of neighborhood names and Ids for a dropdown
-SELECT neighborhoodId, neighborhoodName FROM Neighborhoods;
+SELECT * FROM Neighborhoods;
 
 -- Get table of people user names (email) and Ids for a dropdown
-SELECT personId, personEmail FROM People;
+SELECT * FROM People;
 
 -- Get table of offer types and Ids for a dropdown
-SELECT offerTypeId, offerType FROM OfferTypes;
+SELECT * FROM OfferTypes;
 
 -- Get table of offers and Ids for a dropdown
-SELECT offerId, offerItem FROM Offers;
+SELECT * FROM Offers;
 
 -- Get table of people with household address instead of householdId
-SELECT personId, personName, personEmail, personPhoneNumber, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipcode) AS fullAddress, personKarma 
+SELECT personId, personName, personEmail, personPhoneNumber, CONCAT(householdAddress, ', ', householdCity, ' ', householdState, ', ', householdZipCode) AS fullAddress, personKarma 
 FROM People
 INNER JOIN Households ON personHouseholdId = householdId;
 ORDER BY personId;
