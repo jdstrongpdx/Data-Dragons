@@ -1,6 +1,6 @@
 -- Group 19
 -- Project Name: CloseKnit Bazaar
--- Mike Meller and Joel String
+-- Mike Meller and Joel Strong
 -- This DML file contains the queries needed to implement the backend for a webapp that allows administrative users to interact with and modify the Closeknit Bazaar database.
 -- Note: an asterisk in front of a variable designates that the following variable is user-provIded through the web interface
 
